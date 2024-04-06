@@ -2,6 +2,7 @@ const exrpess = require('express');
 const router = exrpess.Router();
 const { json } = require('body-parser');
 const Client = require('../models/client.model');
+const { where } = require('sequelize');
 
 // Middleware para parsear el body de las peticiones
 router.use(exrpess.json());
@@ -81,6 +82,45 @@ router.post('/create-client', async (req, res) => {
             message: 'Error creating client, sorry'
         });
         console.error(err);
+    }
+})
+
+// Actualizar un cliente
+router.put('/update-client/:id', getClient, async (req, res) => {
+    try {
+        const client = res.client;
+        client.name = req.body.name || client.name;
+        client.email = req.body.email || client.email;
+        client.phone = req.body.phone || client.phone;
+
+        await client.save();
+        res.status(200).json({
+            message: 'Client updated successfully'
+        });
+    } catch (err) {
+        res.status(400).json({
+            message: 'Error updating client'
+        })
+        console.error(err)
+    }
+});
+
+// Eliminar un cliente
+router.delete('/delete-client/:id', getClient, async (req, res) =>{
+    try {
+        const client = res.client;
+        client.destroy({
+            where: {
+                id: id
+            }
+        })
+        res.status(200).json({
+            message: 'Client deleted successfully'
+        })
+    } catch (error) {
+        res.status(400).json({
+            message: 'Error deleting client'
+        })
     }
 })
 
