@@ -27,7 +27,7 @@ app.set('views', path.join(__dirname, '../views'));
 // Middlewares 
 app.use(morgan('dev'));
 app.use(express.static('public'))
-app.use('/uploads', express.static('/uploads'));
+app.use('/uploads', express.static('uploads'));
 
 // Rutas para la vista
 app.get('/',async (req,res)=>{

@@ -1,8 +1,20 @@
 const exrpess = require('express');
 const router = exrpess.Router();
 const Car = require('../models/cars.model');
+const path = require('path');
 const multer = require('multer');
-const upload = multer({ dest: 'uploads/' });
+
+
+const storage = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, 'uploads/');
+    },
+    filename: function(req, file, cb) {
+        cb(null, Date.now() + path.extname(file.originalname)); // Agrega la extensión del archivo
+    }
+});
+
+const upload = multer({ storage: storage });
 
 // Middleware para parsear el body de las peticiones
 router.use(exrpess.json());
