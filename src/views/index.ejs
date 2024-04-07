@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehículos</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <!--Bootstrap-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <!---->
+    <ul>
+        <% array.forEach(function(car) { %>
+         <li><%= car.brand %> - <%= car.model %> - <%= car.year %> <br>
+            <img src="/uploads/ac00a3493f968e4360c98b11e05c69d1.png" alt="<%= car.brand %>" width="200" height="200">
+        <% }) %>    
+    </ul>
+    <script src="/js/index.js"></script>
+</body>
+</html>

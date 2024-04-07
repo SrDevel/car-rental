@@ -2,8 +2,8 @@ const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../db/database');
 
 // Define the Car model
-class Car extends Model {}
-
+class Car extends Model { }
+// Agrefamos un campo para la imagen del carro
 Car.init({
     id: {
         type: DataTypes.UUID,
@@ -53,10 +53,13 @@ Car.init({
     luggage: {
         type: DataTypes.INTEGER,
         allowNull: false
+    },
+    image: {
+        type: DataTypes.STRING,
+        allowNull: true
     }
-
 }, { sequelize, modelName: 'car' });
- 
+
 module.exports = Car;
 
 // // método para testear la conexión a la base de datos, se usa una función autoejecutable
@@ -68,3 +71,14 @@ module.exports = Car;
 //         console.error('Unable to connect to the database :( we did something wrong', err);
 //     }
 // })();
+
+// método para sincronizar la base de datos, sin borrado de datos
+// (async () => {
+//     try {
+//         await sequelize.sync();
+//         console.log('Database synchronized successfully :)');
+//     } catch (err) {
+//         console.error('Unable to synchronize the database :( we did something wrong', err);
+//     }
+// })();
+

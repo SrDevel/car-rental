@@ -1,7 +1,8 @@
 const exrpess = require('express');
 const router = exrpess.Router();
-const { json } = require('body-parser');
 const Car = require('../models/cars.model');
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/' });
 
 // Middleware para parsear el body de las peticiones
 router.use(exrpess.json());
@@ -60,32 +61,36 @@ router.get('/get-car/:id', getCar,async (req, res)=>{
 });
 
 // Crear un carro
-router.post('/create-car', async (req, res)=>{
-    const newCar = await req.body;
-    console.log
+router.post('/create-car', upload.single('image'), async (req, res)=>{
+    const newCar = req.body;
+    // Subir imagen
+    if(req.file) {
+        newCar.image = req.file.path.replace(/\\/g, '/');
+    }
     if(!newCar.brand || !newCar.model || !newCar.year || !newCar.color || !newCar.price || !newCar.available || !newCar.transmission || !newCar.fuel || !newCar.doors || !newCar.passengers || !newCar.luggage){
         res.status(400).json({message: 'All fields are required'});
     } else {
         try{
             Car.sync();
-              const car = await Car.create({
-                     brand: newCar.brand,
-                     model: newCar.model,
-                     year: newCar.year,
-                     color: newCar.color,
-                     price: newCar.price,
-                     available: newCar.available,
-                     transmission: newCar.transmission,
-                     fuel: newCar.fuel,
-                     doors: newCar.doors,
-                     passengers: newCar.passengers,
-                     luggage: newCar.luggage
-                 });
-                 res.status(201).json({message: 'Car created successfully'});
-         } catch (err){
-             res.status(400).json({message: 'Error creating car'});
-             console.error(err);
-         }
+            const car = await Car.create({
+                brand: newCar.brand,
+                model: newCar.model,
+                year: newCar.year,
+                color: newCar.color,
+                price: newCar.price,
+                available: newCar.available,
+                transmission: newCar.transmission,
+                fuel: newCar.fuel,
+                doors: newCar.doors,
+                passengers: newCar.passengers,
+                luggage: newCar.luggage,
+                image: newCar.image
+            });
+            res.status(201).json({message: 'Car created successfully'});
+        } catch (err){
+            res.status(400).json({message: 'Error creating car'});
+            console.error(err);
+        }
     }
 });
 
@@ -105,6 +110,7 @@ router.put('/get-car/:id', getCar, async (req, res)=>{
         car.doors = req.body.doors || car.doors;
         car.passengers = req.body.passengers || car.passengers;
         car.luggage = req.body.luggage || car.luggage;
+        car.image = req.body.image || car.image;
 
         await car.save();
         res.status(200).json({
