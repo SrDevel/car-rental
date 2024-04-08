@@ -20,6 +20,10 @@ Client.init({
     phone: {
         type: DataTypes.STRING,
         allowNull: false
+    },
+    age: {
+        type: DataTypes.INTEGER,
+        allowNull: false
     }   
 }, { sequelize, modelName: 'client'});
 
@@ -33,4 +37,3 @@ module.exports = Client;
 //         console.error('Error creating client table', err);
 //     }
 // })();
-

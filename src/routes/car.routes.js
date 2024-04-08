@@ -10,7 +10,7 @@ const storage = multer.diskStorage({
         cb(null, 'uploads/');
     },
     filename: function(req, file, cb) {
-        cb(null, Date.now() + path.extname(file.originalname)); // Agrega la extensión del archivo
+        cb(null, "carImage-"+Date.now() + path.extname(file.originalname)); // Agrega la extensión del archivo
     }
 });
 
