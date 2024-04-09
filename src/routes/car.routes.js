@@ -3,6 +3,7 @@ const router = exrpess.Router();
 const Car = require('../models/cars.model');
 const path = require('path');
 const multer = require('multer');
+const { type } = require('os');
 
 
 const storage = multer.diskStorage({
@@ -79,7 +80,7 @@ router.post('/create-car', upload.single('image'), async (req, res)=>{
     if(req.file) {
         newCar.image = req.file.path.replace(/\\/g, '/');
     }
-    if(!newCar.brand || !newCar.model || !newCar.year || !newCar.color || !newCar.price || !newCar.available || !newCar.transmission || !newCar.fuel || !newCar.doors || !newCar.passengers || !newCar.luggage){
+    if(!newCar.brand || !newCar.model || !newCar.year || !newCar.color || !newCar.price || !newCar.available || !newCar.transmission || !newCar.fuel || !newCar.doors || !newCar.passengers || !newCar.type ||  !newCar.luggage){
         res.status(400).json({message: 'All fields are required'});
     } else {
         try{
@@ -96,6 +97,7 @@ router.post('/create-car', upload.single('image'), async (req, res)=>{
                 doors: newCar.doors,
                 passengers: newCar.passengers,
                 luggage: newCar.luggage,
+                type: newCar.type,
                 image: newCar.image
             });
             res.status(201).json({message: 'Car created successfully'});
@@ -122,6 +124,7 @@ router.put('/get-car/:id', getCar, async (req, res)=>{
         car.doors = req.body.doors || car.doors;
         car.passengers = req.body.passengers || car.passengers;
         car.luggage = req.body.luggage || car.luggage;
+        car.type = req.body.type || car.type;
         car.image = req.body.image || car.image;
 
         await car.save();
@@ -155,6 +158,32 @@ router.delete('/get-car/:id', getCar, async (req, res)=>{
         console.error(err);
     }
 
+});
+
+// Filtrar vehículos
+router.get('/filter-cars', async (req, res) => {
+    const { transmission, doors, passengers } = req.query;
+    try {
+        const cars = await Car.findAll({
+            where: {
+                transmission: transmission,
+                doors: doors,
+                passengers: passengers,
+                type: type,
+            }
+        });
+        if (cars.length === 0) {
+            return res.status(204).json({
+                message: 'No cars found with the specified filters'
+            });
+        }
+        res.status(200).json(cars);
+    } catch (err) {
+        res.status(400).json({
+            message: 'Error filtering cars'
+        });
+        console.error(err);
+    }
 });
 
 module.exports = router;

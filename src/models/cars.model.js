@@ -3,7 +3,7 @@ const sequelize = require('../db/database');
 
 // Define the Car model
 class Car extends Model { }
-// Agrefamos un campo para la imagen del carro
+// Agregramos un campo para el tipo de auto (carros | camionetas | furgonetas...)
 Car.init({
     id: {
         type: DataTypes.UUID,
@@ -54,6 +54,10 @@ Car.init({
         type: DataTypes.INTEGER,
         allowNull: false
     },
+    type: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
     image: {
         type: DataTypes.STRING,
         allowNull: true
@@ -72,10 +76,10 @@ module.exports = Car;
 //     }
 // })();
 
-// método para sincronizar la base de datos, sin borrado de datos
+// // método para sincronizar la base de datos y asegurarnos de que las tablas se creen correctamente
 // (async () => {
 //     try {
-//         await sequelize.sync();
+//         await sequelize.sync({ force: true });
 //         console.log('Database synchronized successfully :)');
 //     } catch (err) {
 //         console.error('Unable to synchronize the database :( we did something wrong', err);

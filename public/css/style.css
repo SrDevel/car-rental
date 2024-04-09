@@ -1,10 +1,105 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+#contenedor {
+    background: -webkit-linear-gradient(to top right, #082055, #03081E);
+    background: -moz-linear-gradient(to top right, #082055, #03081E);
+    background: linear-gradient(to top right, #082055, #03081E);
 }
 
-body {
-    font-family: 'Roboto', sans-serif;
-    background-color: #f5f5f5;
+.titulo-pagina {
+    font-size: 300%;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: 30px;
+    margin-left: 30px;
+    color: white;
+}
+
+.titulo-filtros {
+    font-size: 30px;
+    color: rgb(0, 0, 0);
+}
+
+.titulo-auto {
+    font-size: 25px;
+    color: white;
+}
+
+.filtros {
+    background-color: white;
+    border-radius: 10px;
+    padding: 10px;
+    margin-left: 10px;
+    /* Lo mantenemos fijo */
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+}
+
+.apartado-formulario {
+    border-radius: 10px;
+    padding: 10px;
+    transition: all 0.3s ease;
+}
+
+.apartado-formulario:hover {
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(152, 152, 152, 0.8);
+}
+
+.fromulario {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.check {
+    margin-right: 10px;
+    display: flex;
+    cursor: pointer;
+}
+
+.check label {
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+.titulo-filtros {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.card {
+    margin-top: 80px;
+    margin-left: 65px;
+    text-align: center;
+    background-color: #f8f9fa;
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: 0 0 10px rgba(152, 152, 152, 0.8);
+    border-radius: 10px;
+    transform: translateY(10px) scale(1.02);
+}
+
+#reserva {
+    background-color: #8c4c9e;
+    margin-top: 50px;
+    margin-left: 80px;
+}
+
+.iconos {
+    margin-right: 5px;
+    vertical-align: middle;
+}
+
+.detalles {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.info {
+    display: flex;
+    align-items: stretch;
+    justify-content: space-around;
 }
