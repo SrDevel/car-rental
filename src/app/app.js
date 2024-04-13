@@ -6,6 +6,7 @@ const axios = require('axios');
 const carRouter = require('../routes/car.routes');
 const clientRouter = require('../routes/client.routes')
 const reservationRouter = require('../routes/reservation.routes');
+const officeRouter = require('../routes/office.routes');
 
 const app = express();
 
@@ -54,5 +55,6 @@ app.get('/cars', async (req, res) => {
 app.use('/api/v1', carRouter);
 app.use('/api/v1', clientRouter);
 app.use('/api/v1', reservationRouter);
+app.use('/api/v1', officeRouter);
 
 module.exports = app;
