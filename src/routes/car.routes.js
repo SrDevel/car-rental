@@ -160,31 +160,4 @@ router.delete('/get-car/:id', getCar, async (req, res)=>{
 
 });
 
-// Filtrar vehículos
-router.get('/filter-cars', async (req, res) => {
-    const { transmission, doors, passengers } = req.query;
-    try {
-        const cars = await Car.findAll({
-            where: {
-                transmission: transmission,
-                doors: doors,
-                passengers: passengers,
-                ['type']: req.query.type
-            }
-        });
-        if (cars.length === 0) {
-            return res.status(204).json({
-                message: 'No cars found with the specified filters'
-            });
-        }
-        console.log(cars);
-        res.status(200).json(cars);
-    } catch (err) {
-        res.status(400).json({
-            message: 'Error filtering cars'
-        });
-        console.error(err);
-    }
-});
-
 module.exports = router;
