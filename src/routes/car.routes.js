@@ -169,7 +169,7 @@ router.get('/filter-cars', async (req, res) => {
                 transmission: transmission,
                 doors: doors,
                 passengers: passengers,
-                type: type,
+                ['type']: req.query.type
             }
         });
         if (cars.length === 0) {
@@ -177,6 +177,7 @@ router.get('/filter-cars', async (req, res) => {
                 message: 'No cars found with the specified filters'
             });
         }
+        console.log(cars);
         res.status(200).json(cars);
     } catch (err) {
         res.status(400).json({

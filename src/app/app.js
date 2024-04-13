@@ -23,8 +23,6 @@ const getApiData = async (url) => {
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '../views'));
 
-
-
 // Middlewares 
 app.use(morgan('dev'));
 app.use(express.static('public'))

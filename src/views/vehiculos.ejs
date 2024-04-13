@@ -12,7 +12,6 @@
 </head>
 
 <body>
-
   <div class="container-fluid" id="contenedor">
 
     <div class="row">
@@ -29,59 +28,65 @@
       <div class="col-lg-2">
         <div class="apartado-formulario row mt-3 mb-3 filtros">
           <div class="col-12">
+
             <p class="titulo-filtros">Filtros</p>
 
             <div class="fromulario form-group">
               <label for="tipoVehiculo">Tipo de vehículo</label>
               <div class="check">
-                <input type="checkbox" name="tipoAuto" id="tipoAuto" value="auto">
-                <label for="tipoAuto">Auto</label>
+                <input type="checkbox" name="type" id="tipoAuto" value="Automóvil">
+                <label for="type">Automóvil</label>
               </div>
               <div class="check">
-                <input type="checkbox" name="tipoCamioneta" id="tipoCamioneta" value="camioneta">
-                <label for="tipoCamioneta">Camioneta</label>
+                <input type="checkbox" name="type" id="tipoCamioneta" value="Vehículo intermedio">
+                <label for="type">Vehículo intermedio</label>
               </div>
             </div>
 
             <div class="fromulario form-group">
               <label for="personas">Cantidad de personas</label>
               <div class="check">
-                <input type="checkbox" name="dosPersonas" id="dosPersonas" value="2">
-                <label for="dosPersonas">2+</label>
+                <input type="checkbox" name="passengers" id="dosPersonas" value="2">
+                <label for="passengers">2+</label>
               </div>
               <div class="check">
-                <input type="checkbox" name="tresPersonas" id="tresPersonas" value="3">
-                <label for="tresPersonas">3+</label>
+                <input type="checkbox" name="passengers" id="tresPersonas" value="3">
+                <label for="passengers">3+</label>
               </div>
               <div class="check">
-                <input type="checkbox" name="cuatroPersonas" id="cuatroPersonas" value="4">
-                <label for="cuatroPersonas">4+</label>
+                <input type="checkbox" name="passengers" id="cuatroPersonas" value="4">
+                <label for="passengers">4+</label>
               </div>
             </div>
 
             <div class="fromulario form-group">
               <label for="puertas">Cantidad de puertas</label>
               <div class="check">
-                <input type="checkbox" name="dosPuertas" id="dosPuertas" value="2">
-                <label for="dosPuertas">2+</label>
+                <input type="checkbox" name="doors" id="dosPuertas" value="2">
+                <label for="doors">2+</label>
               </div>
               <div class="check">
-                <input type="checkbox" name="cuatroPuertas" id="cuatroPuertas" value="4">
-                <label for="cuatroPuertas">4+</label>
+                <input type="checkbox" name="doors" id="cuatroPuertas" value="4">
+                <label for="doors">4+</label>
               </div>
             </div>
 
             <div class="fromulario form-group">
               <label for="Transmisión">Transmisión</label>
               <div class="check">
-                <input type="checkbox" name="manual" id="manual" value="manual">
-                <label for="manual">Manual</label>
+                <input type="checkbox" name="transmission" id="manual" value="manual"/>
+                <label for="transmission">Manual</label>
               </div>
               <div class="check">
-                <input type="checkbox" name="automatica" id="automatica" value="automatica">
-                <label for="automatica">Automática</label>
+                <input type="checkbox" name="transmission" id="automatica" value="automatico">
+                <label for="transmission">Automática</label>
               </div>
-            </div>      
+            </div>
+
+            <!--boton-->
+            <div class="d-flex justify-content-center">
+              <button type="submit" class="btn btn-primary" id="filtrar-btn">Filtrar</button>
+            </div>
           </div>
         </div>
       </div>
@@ -93,7 +98,12 @@
           <div class="row">
             <% array.forEach(function(car) { %>
               <div class="col-lg-4 col-md-8 col-sm-12 mb-3 d-flex justify-content-center align-items-center ">
-                <div class="card" style="width: 18rem;">
+                <div class="card" style="width: 18rem;"
+                data-transmission="<%= car.transmission %>"
+                data-passengers="<%= car.passengers %>"
+                data-doors="<%= car.doors %>"
+                data-type="<%= car.type %>"
+                >
                   <img src="<%= car.image %>" class="card-img-top" alt="<%= car.brand %> <%= car.model %>"
                     height="200px" width="auto">
                   <div class="card-body">
@@ -122,26 +132,37 @@
                       </div>
                       <br>
                     </div>
-                    <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#carModal<%= car.id %>">Ver detalles</a>
+                    <a href="#" class="btn btn-primary" data-bs-toggle="modal"
+                      data-bs-target="#carModal<%= car.id %>">Ver detalles</a>
                   </div>
                 </div>
               </div>
-              <div class="modal fade" id="carModal<%= car.id %>" tabindex="-1" aria-labelledby="carModalLabel<%= car.id %>" aria-hidden="true">
+              <div class="modal fade" id="carModal<%= car.id %>" tabindex="-1"
+                aria-labelledby="carModalLabel<%= car.id %>" aria-hidden="true">
                 <div class="modal-dialog">
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h5 class="modal-title" id="carModalLabel<%= car.id %>"><%= car.brand %> <%= car.model %></h5>
+                      <h5 class="modal-title" id="carModalLabel<%= car.id %>">
+                        <%= car.brand %>
+                          <%= car.model %>
+                      </h5>
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                      <img src="<%= car.image %>" class="card-img-top" alt="<%= car.brand %> <%= car.model %>" height="200px"
-                        width="auto">
-                      <p>Marca: <%= car.brand %></p>
-                      <p>Modelo: <%= car.model %></p>
-                      <p>Año: <%= car.year %></p>
-                      <p>Pasajeros: <%= car.passengers %></p>
-                      <p>Puertas: <%= car.doors %></p>
-                      <p>Transmisión: <%= car.transmission %></p>
+                      <img src="<%= car.image %>" class="card-img-top" alt="<%= car.brand %> <%= car.model %>"
+                        height="200px" width="auto">
+                      <p>Marca: <%= car.brand %>
+                      </p>
+                      <p>Modelo: <%= car.model %>
+                      </p>
+                      <p>Año: <%= car.year %>
+                      </p>
+                      <p>Pasajeros: <%= car.passengers %>
+                      </p>
+                      <p>Puertas: <%= car.doors %>
+                      </p>
+                      <p>Transmisión: <%= car.transmission %>
+                      </p>
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -153,13 +174,48 @@
           </div>
           <% } else { %>
             <p>No hay vehículos disponibles.</p>
-          <% } %>
+            <% } %>
       </div>
     </div>
   </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Evento de cambio en los checkboxes de filtro
+        document.querySelectorAll('input[type="checkbox"]').forEach(function(checkbox) {
+            checkbox.addEventListener('change', function() {
+                filtrarAutos();
+            });
+        });
+
+        // Función para filtrar los autos
+        function filtrarAutos() {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+            const contenedorAutos = document.querySelector('.col-lg-9');
+
+            contenedorAutos.querySelectorAll('.card').forEach(function(auto) {
+                let mostrarAuto = true; // Suponemos inicialmente que se debe mostrar el auto
+
+                checkboxes.forEach(function(checkbox) {
+                    // Si el auto no cumple con uno de los criterios, no lo mostramos
+                    if (auto.dataset[checkbox.name] !== checkbox.value) {
+                        mostrarAuto = false;
+                    }
+                });
+
+                // Mostrar u ocultar el auto según la lógica establecida
+                if (mostrarAuto) {
+                    auto.style.display = 'block';
+                } else {
+                    auto.style.display = 'none';
+                }
+            });
+        }
+    });
+  </script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
 
 </body>
+
 </html>
