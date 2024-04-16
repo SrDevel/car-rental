@@ -3,3 +3,41 @@
     padding: 0;
     box-sizing: border-box;
 }
+
+#map {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.titulo-pagina {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.menu-lateral {
+    background-color: #0963bd;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.list-group {
+    margin-top: 20px;
+}
+
+.list-group-item {
+    background-color: transparent;
+    margin-top: 10px;
+}
+
+.list-group-item h5 {
+    color: white;
+}
+
+.list-group-item p {
+    margin-bottom: 0;
+    color: white;
+}
+
+.collapse {
+    margin-top: 10px;
+}

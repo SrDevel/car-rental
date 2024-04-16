@@ -58,6 +58,7 @@ app.get('/offices', async (req, res) => {
     if (Array.isArray(data)) {
         // Renderizamos la vista y pasamos los datos
         res.render('offices', { array: data });
+        res.json(data);
     } else {
         console.log('Data no es un array');
         res.render('offices', { array: data });
@@ -65,7 +66,6 @@ app.get('/offices', async (req, res) => {
 });
 
 app.get('/api/mapquest-key', (req, res) => {
-    console.log(process.env.MAP_QUEST_API_KEY);
     res.json({ key: process.env.MAP_QUEST_API_KEY });
 });
 

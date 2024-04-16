@@ -17,37 +17,41 @@
     <!--Lista de oficinas-->
     <div class="container">
         <!--Lista de oficinas con un list-->
-        <ul class="list-group">
-            <!--Iteramos sobre el array de oficinas-->
-            <% array.forEach(function(office) { %>
-                <li class="list-group-item">
-                    <div class="row">
-                        <div class="col-8">
-                            <h5>
-                                <%= office.name %>
-                            </h5>
-                            <p>
-                                <%= office.address %>
-                            </p>
-                            <p>
-                                <%= office.phone %>
-                            </p>
-                        </div>
-                    </div>
-                </li>
-                <% }) %>
-        </ul>
         <div class="row">
-            <!--Mapa con un frame-->
-            <div class="row">
-                <div class="col-12">
+            <div class="col-12 col-md-6 col-lg-4 col-xl-3">
+                <div class="menu-lateral" style="margin-top: 20px;">
                     <h2 class="titulo-pagina text-center">Oficinas</h2>
-                    <div id="map" style="height: 400px;"></div>
+                    <ul class="list-group">
+                        <% if (array && array.length > 0) { %>
+                            <% array.forEach(function(offices, index) { %>
+                                <li class="list-group-item">
+                                    <div class="row">
+                                        <div class="col-8">
+                                            <!-- Aquí agregamos un botón que controlará el despliegue de la información -->
+                                            <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#office-info-<%= index %>">
+                                                <h5><%= offices.name %></h5>
+                                            </button>
+                                            <!-- Aquí colocamos la información dentro de un div que se puede colapsar -->
+                                            <div id="office-info-<%= index %>" class="collapse">
+                                                <p><%= offices.address %></p>
+                                                <p><%= offices.phone %></p>
+                                                <p><%= offices.opening_time %></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            <% }) %> <% } else { %>
+                                <p>No hay oficinas disponibles</p>
+                            <% } %>
+                    </ul>
                 </div>
             </div>
+            <!--Mapa con un frame-->
+            <div class="col-12 col-md-6 col-lg-8 col-xl-9">
+                <div id="map" style="height: 500px;"></div>
+            </div>
         </div>
-
-
+    </div>
         <script src="/js/offices.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
@@ -55,18 +59,25 @@
         <!--MapQuest-->
         <script>
             fetch('/api/mapquest-key')
-                .then(response => response.json())
-                .then(data => {
-                    L.mapquest.key = data.key;
-                    // 'map' refers to a <div> element with the ID map
-                    L.mapquest.map('map', {
-                    center: [37.7749, -122.4194],
-                    layers: L.mapquest.tileLayer('map'),
-                    zoom: 12
-                });
-            });
-                    
+                .then(response => response.text())
+                .then(key => {
+                    L.mapquest.key = key;
+                    fetch('/offices')
+                        .then(response => response.json())
+                        .then(data => {
+                            const map = L.mapquest.map('map', {
+                                center: [6.280016522878952, -75.58279462407013], 
+                                layers: L.mapquest.tileLayer('map'),
+                                zoom: 12
+                            });
+        
+                            data.array.forEach(office => {
+                                L.marker(office.coordinates).addTo(map); // Asume que office.coordinates es un array [lat, lng]
+                            });
+                        })
+                        .catch(error => console.error('Error:', error));
+                })
+                .catch(error => console.error('Error:', error));
         </script>
 </body>
-
 </html>
