@@ -2,6 +2,10 @@ const express = require('express');
 const morgan = require('morgan');
 const path = require('path');
 const axios = require('axios');
+const dotenv = require('dotenv');
+
+dotenv.config();
+
 // Rutas
 const carRouter = require('../routes/car.routes');
 const clientRouter = require('../routes/client.routes')
@@ -31,11 +35,7 @@ app.use('/uploads', express.static('uploads'));
 
 // Rutas para la vista
 app.get('/',async (req,res)=>{
-    // Obtenemos los datos de la API
-    const data = await getApiData('http://localhost:3000/api/v1/get-cars');
-    console.log(data);
-    // Renderizamos la vista y pasamos los datos
-    res.render('index', { array: data});
+    res.render('index', { title: 'Inicio', message: 'Bienvenido a la API de Rent a Car' });
 });
 
 app.get('/cars', async (req, res) => {
@@ -49,6 +49,24 @@ app.get('/cars', async (req, res) => {
         console.log('Data no es un array');
         res.render('vehiculos', { array: data });
     }
+});
+
+app.get('/offices', async (req, res) => {
+    // Obtenemos los datos de la API
+    const data = await getApiData('http://localhost:3000/api/v1/get-offices');
+    // Comprobamos si data es un array
+    if (Array.isArray(data)) {
+        // Renderizamos la vista y pasamos los datos
+        res.render('offices', { array: data });
+    } else {
+        console.log('Data no es un array');
+        res.render('offices', { array: data });
+    }
+});
+
+app.get('/api/mapquest-key', (req, res) => {
+    console.log(process.env.MAP_QUEST_API_KEY);
+    res.json({ key: process.env.MAP_QUEST_API_KEY });
 });
 
 // Rutas de la API

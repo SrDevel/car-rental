@@ -64,8 +64,8 @@ router.get('/get-office/:id', getOffice, (req, res) => {
 
 // Crear una oficina
 router.post('/create-office', async (req, res) => {
-    const { name, address, phone, email, latitud, longitud } = req.body;
-    if (!name || !address || !phone || !email || !latitud || !longitud){
+    const { name, address, phone, opening_time, latitude, longitude } = req.body;
+    if (!name || !address || !phone || !opening_time || !latitude || !longitude){
         return res.status(400).json({
             message: 'Missing fields'
         });
@@ -76,9 +76,9 @@ router.post('/create-office', async (req, res) => {
             name,
             address,
             phone,
-            email,
-            latitud,
-            longitud
+            opening_time,
+            latitude,
+            longitude
         });
         res.status(201).json(office);
     } catch (error) {

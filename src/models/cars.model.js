@@ -1,7 +1,7 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../db/database');
 
-// Define the Car model
+// Define la clase Car que extiende de Model
 class Car extends Model { }
 // Agregramos un campo para el tipo de auto (carros | camionetas | furgonetas...)
 Car.init({
