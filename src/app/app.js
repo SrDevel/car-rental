@@ -44,10 +44,10 @@ app.get('/cars', async (req, res) => {
     // Comprobamos si data es un array
     if (Array.isArray(data)) {
         // Renderizamos la vista y pasamos los datos
-        res.render('vehiculos', { array: data });
+        res.render('vehicles', { array: data });
     } else {
         console.log('Data no es un array');
-        res.render('vehiculos', { array: data });
+        res.render('vehicles', { array: data });
     }
 });
 
@@ -58,11 +58,14 @@ app.get('/offices', async (req, res) => {
     if (Array.isArray(data)) {
         // Renderizamos la vista y pasamos los datos
         res.render('offices', { array: data });
-        res.json(data);
     } else {
         console.log('Data no es un array');
         res.render('offices', { array: data });
     }
+});
+
+app.get('/reservations', async (req, res) => {
+    res.render('reservations')
 });
 
 app.get('/api/mapquest-key', (req, res) => {

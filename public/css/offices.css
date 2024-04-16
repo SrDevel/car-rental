@@ -4,11 +4,6 @@
     box-sizing: border-box;
 }
 
-#map {
-    width: 100%;
-    margin-top: 20px;
-}
-
 .titulo-pagina {
     margin-top: 20px;
     margin-bottom: 20px;
@@ -18,6 +13,7 @@
     background-color: #0963bd;
     padding: 20px;
     border-radius: 10px;
+    margin-right: 6rem;
 }
 
 .list-group {
@@ -25,19 +21,34 @@
 }
 
 .list-group-item {
-    background-color: transparent;
+    background-color: transparent !important;
+    border: none !important;
     margin-top: 10px;
 }
 
 .list-group-item h5 {
     color: white;
+    margin-bottom: 0;
+    font-size: 15px;
+    border-bottom: 1px solid white !important;
 }
 
 .list-group-item p {
     margin-bottom: 0;
     color: white;
+    font-size: 10px;
 }
 
 .collapse {
     margin-top: 10px;
+}
+
+.mapa {
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+}
+
+.mapa:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
