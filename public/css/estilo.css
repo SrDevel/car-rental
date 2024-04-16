@@ -1,0 +1,86 @@
+.title{
+    font-weight: 500;
+}
+
+.barra-menu{
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+.banner1{
+    margin-top: 86px;
+}
+
+ .link {
+    color: #414b5f; 
+    font-weight: 500;
+    font-size: 20px;
+}
+
+   /* .link:hover {
+    color: red; /* Color al pasar el mouse */
+
+.link.active {
+    color: #0f3973; /* Color cuando esté activo (en el href actual) */
+}
+
+.text-reservacion{
+    font-size: 30px;
+    font-weight: 500;
+    color: #0f3973; 
+}
+
+.container-form{
+    height: 230px;
+    background-color: #0f3973;
+}
+
+.text-form{
+    color: white;
+    font-weight: 500;
+}
+
+.boton-form{
+    background-color: #66bb33;
+    color: white;
+    font-weight: 500;
+}
+
+ footer{
+    margin-top: 20px;
+    background-color: #0f3973;
+    height: 250px;
+ }
+
+ .title-footer{
+    color: white;
+    font-weight: 500;
+    padding-top: 20px;
+    padding-left: 50px;
+ }
+
+ .link-footer {
+    color: white; 
+    font-size: 15px;
+    text-decoration: none;
+    padding-left: 50px;
+}
+
+
+/*Estilo de reservas.html*/
+.contenedor-reservas{
+    padding-top: 20px;
+    padding-left: 20px;
+    background-color: #dcdcdc;
+    height: 400px;
+    width: 1290px;
+    margin-left: 30px;
+}
+
+.contenedor-reservas-form{
+    background-color: #ecebea;
+    height: 300px;
+    color: #414b5f;
+}
