@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="/css/styles.css">
     <title>RentEasy Autos</title>
     <link rel="shortcut icon" href="img/Logo.jpg" type="image/x-icon">
 </head>
@@ -38,7 +38,7 @@
 <div class="container-fluid">
   <br>
   <img class="ms-5" src="img/lupa.png" alt="iconolupa" width="35"><span class="text-reservacion">&nbsp;Realizar una reservación</span>
-  <div class="container rounded container-form mt-3">
+  <form class="container rounded container-form mt-3" post="/api/v1/new-reservation">
     
     <div class="row">
       <div class="col-12 mt-3">
@@ -52,9 +52,9 @@
         <div class="form-floating">
           <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
             <option selected>Buscar oficina, aeropuerto, código postal</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
+            <% array.forEach(function(offices) { %>
+              <option value="<%= offices.id %>"><%= offices.name %></option>
+            <% }) %>
           </select>
           <label for="floatingSelect">OFICINA DE RECOGIDA</label>
         </div>
@@ -82,7 +82,7 @@
       </div>
     </div>
   
-  </div>
+  </form>
 </div>
 
 <div class="mt-4">
@@ -131,10 +131,12 @@
 
     <div class="col-4">
       <p class="title-footer text-center">OFICINAS</p>
+      <a class="link-footer" href="http://localhost:3000/offices">Ver todas las oficinas</a>
     </div>
 
     <div class="col-4">
       <p class="title-footer text-center">EMPRESA</p>
+      <a class="link-footer" href="#">Acerca de RentEasy</a><br>
     </div>
   </div>
 </footer>

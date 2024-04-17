@@ -35,7 +35,8 @@ app.use('/uploads', express.static('uploads'));
 
 // Rutas para la vista
 app.get('/',async (req,res)=>{
-    res.render('index', { title: 'Inicio', message: 'Bienvenido a la API de Rent a Car' });
+    const data = await getApiData('http://localhost:3000/api/v1/get-offices');
+    res.render('index', {array: data});
 });
 
 app.get('/cars', async (req, res) => {
@@ -63,6 +64,7 @@ app.get('/offices', async (req, res) => {
         res.render('offices', { array: data });
     }
 });
+
 
 app.get('/reservations', async (req, res) => {
     res.render('reservations')
