@@ -1,4 +1,4 @@
-const { Model, DataTypes } = require('sequelize');
+const { Model, DataTypes, UUIDV4 } = require('sequelize');
 const sequelize = require('../db/database');
 
 class Office extends Model { }
@@ -6,8 +6,9 @@ class Office extends Model { }
 Office.init(
     {
         id: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.UUID,
             autoIncrement: true,
+            defaultValue: UUIDV4,
             primaryKey: true
         },
         name: {

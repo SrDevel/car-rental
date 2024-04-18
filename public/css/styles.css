@@ -7,6 +7,7 @@
     top: 0;
     width: 100%;
     z-index: 1000;
+    left: 0;
 }
 
 .banner1{
@@ -56,4 +57,7 @@
     background-color: #ecebea;
     height: 300px;
     color: #414b5f;
+}
+#contenedor{
+    margin-top: 60px;
 }

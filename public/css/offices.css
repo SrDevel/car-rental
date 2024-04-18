@@ -58,14 +58,3 @@
 .mapa:hover {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
-
-.footer-section {
-    background-color: #0963bd;
-    color: white;
-    padding: 20px;
-    margin-top: 20px;
-    /* Hacemos que el footer ocupe toda la pantalla */
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-}

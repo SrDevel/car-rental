@@ -70,10 +70,6 @@ app.get('/reservations', async (req, res) => {
     res.render('reservations')
 });
 
-app.get('/api/mapquest-key', (req, res) => {
-    res.json({ key: process.env.MAP_QUEST_API_KEY });
-});
-
 // Rutas de la API
 app.use('/api/v1', carRouter);
 app.use('/api/v1', clientRouter);
