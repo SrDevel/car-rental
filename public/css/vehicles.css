@@ -103,3 +103,7 @@
     align-items: stretch;
     justify-content: space-around;
 }
+
+.vehiculos {
+    margin-top: -40px;
+}
