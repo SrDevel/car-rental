@@ -42,33 +42,6 @@
     font-weight: 500;
 }
 
-.boton-form{
-    background-color: #66bb33;
-    color: white;
-    font-weight: 500;
-}
-
- footer{
-    margin-top: 20px;
-    background-color: #0f3973;
-    height: 250px;
- }
-
- .title-footer{
-    color: white;
-    font-weight: 500;
-    padding-top: 20px;
-    padding-left: 50px;
- }
-
- .link-footer {
-    color: white; 
-    font-size: 15px;
-    text-decoration: none;
-    padding-left: 50px;
-}
-
-
 /*Estilo de reservas.html*/
 .contenedor-reservas{
     padding-top: 20px;

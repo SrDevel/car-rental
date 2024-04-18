@@ -1,5 +1,9 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../db/database');
+const Office = require('./office.model');
+const Client = require('./client.model')
+
+
 
 class Reservation extends Model {}
 
@@ -43,6 +47,9 @@ Reservation.init({
     }
     
 }, { sequelize, modelName: "reservation"});
+
+Reservation.belongsTo(Office, { foreignKey: 'office_id' });
+Client.belongsTo(Office, { foreignKey: 'client_id' });
 
 module.exports = Reservation;
 
