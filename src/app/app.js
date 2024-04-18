@@ -74,6 +74,10 @@ app.get('/api/mapquest-key', (req, res) => {
     res.json({ key: process.env.MAP_QUEST_API_KEY });
 });
 
+app.get('/login', async (req, res)=>{
+    res.render('login');
+});
+
 // Rutas de la API
 app.use('/api/v1', carRouter);
 app.use('/api/v1', clientRouter);
