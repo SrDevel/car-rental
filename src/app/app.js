@@ -39,7 +39,7 @@ app.get('/',async (req,res)=>{
     res.render('index', {array: data});
 });
 
-app.get('/cars', async (req, res) => {
+app.get('/vehicles', async (req, res) => {
     // Obtenemos los datos de la API
     const data = await getApiData('http://localhost:3000/api/v1/get-cars');
     // Comprobamos si data es un array

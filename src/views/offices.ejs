@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,6 +14,27 @@
 </head>
 
 <body>
+
+    <style>
+        .elementos-lista{
+            text-align: left;
+            background-color: #0f3973;
+            border-radius: 5px;
+            padding: 8px;
+        }
+
+        .elementos-lista h6 {
+            color: azure;
+            margin-bottom: 0;
+            padding-left: 3px;
+        }
+
+        .elementos-lista p {
+            font-size: 0.9rem;
+            margin: 1px 4px 3px 0;
+            padding-left: 4px;
+        }
+    </style>
     <!--Barra de navegación-->
     <nav class="navbar bg-body-tertiary barra-menu">
         <div class="container-fluid">
@@ -25,7 +47,7 @@
                     <a class="nav-link link" href="http://localhost:3000/">Reservas</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link link" href="http://localhost:3000/cars">Vehículos</a>
+                    <a class="nav-link link" href="http://localhost:3000/vehicles">Vehículos</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link link" href="http://localhost:3000/offices">Oficinas</a>
@@ -48,41 +70,56 @@
         <div class="row">
             <div class="col-12 col-md-6 col-lg-4 col-xl-3">
                 <div class="menu-lateral" style="margin-top: 20px;">
-                    <h2 class="titulo-pagina text-center">Oficinas</h2>
-                    <ul class="list-group list-group-flush text-center mt-3 mb-3">
-                        <% if (array && array.length > 0) { %>
+                    <h2 class="titulo text-center">Oficinas</h2>
+                    <ul class="list-group list-group-flush mt-3 mb-3">
+                        <% if (array && array.length> 0) { %>
                             <% array.forEach(function(offices, index) { %>
                                 <li class="list-group-item">
                                     <div class="row">
                                         <div>
                                             <!-- Aquí agregamos un botón que controlará el despliegue de la información -->
-                                            <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#office-info-<%= index %>">
-                                                <h5><%= offices.name %></h5>
+                                            <button class="btn btn-link" type="button" data-bs-toggle="collapse"
+                                                data-bs-target="#office-info-<%= index %>">
+                                                <h5 class="nombre-oficina">
+                                                    <%= offices.name %>
+                                                </h5>
                                             </button>
                                             <!-- Aquí colocamos la información dentro de un div que se puede colapsar -->
-                                            <div id="office-info-<%= index %>" class="collapse">
-                                                <p><%= offices.address %></p>
-                                                <p><%= offices.phone %></p>
-                                                <p><%= offices.opening_time %></p>
+                                            <div id="office-info-<%= index %>" class="collapse elementos-lista">
+                                                <h6>Ubicación</h6>
+                                                <p>
+                                                    <%= offices.address %>
+                                                </p>
+                                                <h6>Teléfono</h6>
+                                                <p>
+                                                    <%= offices.phone %>
+                                                </p>
+                                                <h6>Horarios</h6>
+                                                <p>
+                                                    <%= offices.opening_time %>
+                                                </p>
                                             </div>
                                         </div>
                                     </div>
                                 </li>
-                            <% }) %> <% } else { %>
-                                <p>No hay oficinas disponibles</p>
-                            <% } %>
+                                <% }) %>
+                                <% } else { %>
+                                    <p>No hay oficinas disponibles</p>
+                                <% } %>
                     </ul>
                 </div>
             </div>
             <div id="map" class="mapa col-12 col-md-6 col-lg-8 col-xl-9" style="height: 500px;"></div>
+        </div>
     </div>
-    
+
     <!--footer-->
     <%- include('partials/footer'); %>
-    
+
         <script src="/js/offices.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
             crossorigin="anonymous"></script>
 </body>
+
 </html>
