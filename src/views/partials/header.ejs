@@ -1,0 +1,57 @@
+<style>
+    .title {
+        font-weight: 500;
+    }
+
+    .barra-menu {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1000;
+        left: 0;
+    }
+
+    .banner1 {
+        margin-top: 86px;
+    }
+
+    .link {
+        color: #414b5f;
+        font-weight: 500;
+        font-size: 20px;
+    }
+
+    /* .link:hover {
+    color: red; /* Color al pasar el mouse */
+
+    .link.active {
+        color: #0f3973;
+        /* Color cuando esté activo (en el href actual) */
+    }
+</style>
+
+<nav class="navbar bg-body-tertiary barra-menu">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="http://localhost:3000/">
+            <img src="img/Logo.jpg" alt="Logo" width="60" height="60" class="d-inline-block align-text-center">
+            <span class="title ms-2 mt-2">RentEasy Autos</span>
+        </a>
+        <ul class="nav justify-content-center">
+            <li class="nav-item">
+                <a class="nav-link link" href="http://localhost:3000/">Reservas</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link link" href="http://localhost:3000/vehicles">Vehículos</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link link" href="http://localhost:3000/offices">Oficinas</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link link" href="http://localhost:3000/login">Inicia sección</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link link" href="#">Blog</a>
+            </li>
+        </ul>
+    </div>
+</nav>

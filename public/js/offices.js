@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function() {
         // Verificar si los datos son un array
         if (Array.isArray(data)) {
             // Inicializar el mapa
-            var map = L.map("map").setView([6.28010, -75.58262], 17);
+            var map = L.map("map").setView([6.28010, -75.58262], 12);
 
             L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
                 attribution: "&copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
