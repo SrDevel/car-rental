@@ -1,8 +1,6 @@
 const exrpess = require('express');
 const router = exrpess.Router();
-const { json } = require('body-parser');
 const Client = require('../models/client.model');
-const { where } = require('sequelize');
 
 // Middleware para parsear el body de las peticiones
 router.use(exrpess.json());

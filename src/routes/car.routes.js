@@ -3,7 +3,6 @@ const router = exrpess.Router();
 const Car = require('../models/cars.model');
 const path = require('path');
 const multer = require('multer');
-const { type } = require('os');
 
 // Destino de las imágenes
 const storage = multer.diskStorage({ 

@@ -3,14 +3,26 @@ const morgan = require('morgan');
 const path = require('path');
 const axios = require('axios');
 const dotenv = require('dotenv');
+const bodyParser = require('body-parser');
+const router = express.Router();
 
 dotenv.config();
+
+router.use(bodyParser.urlencoded({ extended: true }));
+router.use(bodyParser.json());
 
 // Rutas
 const carRouter = require('../routes/car.routes');
 const clientRouter = require('../routes/client.routes')
 const reservationRouter = require('../routes/reservation.routes');
 const officeRouter = require('../routes/office.routes');
+const userRouter = require('../routes/user.routes');
+
+
+// Importamos los controladores
+const carController = require('../controllers/vehicles.controller');
+const loginController = require('../controllers/login.controller');
+const dashboardController = require('../controllers/dashboard.controller');
 
 const app = express();
 
@@ -32,6 +44,9 @@ app.set('views', path.join(__dirname, '../views'));
 app.use(morgan('dev'));
 app.use(express.static('public'))
 app.use('/uploads', express.static('uploads'));
+// Para poder leer los datos de los formularios, es necesario usar estos middlewares de express para parsear los datos de las peticiones
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 
 // Rutas para la vista
 app.get('/',async (req,res)=>{
@@ -39,18 +54,7 @@ app.get('/',async (req,res)=>{
     res.render('index', {array: data});
 });
 
-app.get('/vehicles', async (req, res) => {
-    // Obtenemos los datos de la API
-    const data = await getApiData('http://localhost:3000/api/v1/get-cars');
-    // Comprobamos si data es un array
-    if (Array.isArray(data)) {
-        // Renderizamos la vista y pasamos los datos
-        res.render('vehicles', { array: data });
-    } else {
-        console.log('Data no es un array');
-        res.render('vehicles', { array: data });
-    }
-});
+app.get('/vehicles', carController.getVehicles);
 
 app.get('/offices', async (req, res) => {
     // Obtenemos los datos de la API
@@ -67,17 +71,20 @@ app.get('/offices', async (req, res) => {
 
 
 app.get('/reservations', async (req, res) => {
-    res.render('reservations')
+    res.render('reservations', { message: '' });
 });
 
-app.get('/login', async (req, res)=>{
-    res.render('login');
-});
+app.get('/login', loginController.getLogin);
+app.post('/login', loginController.postLogin);
+ 
+app.get('/dashboard', dashboardController.getDashboard);
+
 
 // Rutas de la API
 app.use('/api/v1', carRouter);
 app.use('/api/v1', clientRouter);
 app.use('/api/v1', reservationRouter);
 app.use('/api/v1', officeRouter);
+app.use('/api/v1', userRouter);
 
 module.exports = app;
