@@ -1,15 +1,17 @@
 const express = require('express');
 const morgan = require('morgan');
 const path = require('path');
-const axios = require('axios');
 const dotenv = require('dotenv');
 const bodyParser = require('body-parser');
 const router = express.Router();
+const cookieParser = require('cookie-parser');
+const { verifyToken } = require('../security/jwt.config');
 
+// Configuración de variables de entorno y middlewares de express para parsear datos de formularios y cookies
 dotenv.config();
-
 router.use(bodyParser.urlencoded({ extended: true }));
 router.use(bodyParser.json());
+
 
 // Rutas
 const carRouter = require('../routes/car.routes');
@@ -26,17 +28,11 @@ const dashboardController = require('../controllers/dashboard.controller');
 const officeController = require('../controllers/offices.controller');
 const indexController = require('../controllers/index.controller');
 
+// Inicializamos la app de express
 const app = express();
 
-// Creamos la funcion para obtener los datos de la API
-const getApiData = async (url) => {
-    try {
-        const response = await axios.get(url);
-        return response.data;
-    } catch (error) {
-        console.error(error);
-    }
-}
+// Configuración de la app
+app.use(cookieParser());
 
 // pasamos el motor de plantillas
 app.set('view engine', 'ejs');
@@ -56,7 +52,7 @@ app.get('/vehicles', carController.getVehicles);
 app.get('/offices', officeController.getOffices);
 app.get('/login', loginController.getLogin);
 app.post('/login', loginController.postLogin);
-app.get('/dashboard', dashboardController.getDashboard);
+app.get('/dashboard', verifyToken, dashboardController.getDashboard);
 
 
 // Rutas de la API
