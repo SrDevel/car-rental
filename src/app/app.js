@@ -27,6 +27,7 @@ const loginController = require('../controllers/login.controller');
 const dashboardController = require('../controllers/dashboard.controller');
 const officeController = require('../controllers/offices.controller');
 const indexController = require('../controllers/index.controller');
+const logoutController = require('../controllers/logout.controller');
 
 // Inicializamos la app de express
 const app = express();
@@ -53,6 +54,7 @@ app.get('/offices', officeController.getOffices);
 app.get('/login', loginController.getLogin);
 app.post('/login', loginController.postLogin);
 app.get('/dashboard', verifyToken, dashboardController.getDashboard);
+app.get('/logout', logoutController.logout);
 
 
 // Rutas de la API

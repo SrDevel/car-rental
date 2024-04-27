@@ -35,14 +35,12 @@ const generateToken = (user) => {
     return token;
 }
 
-const validateToken = (token) => {
-    return jwt.verify(token, jwtConfig.secret, {
-        algorithms: jwtConfig.algorithms
-    });
+const destroyToken = (res) => {
+    res.clearCookie('token');
 }
 
 module.exports = {
     generateToken,
     verifyToken,
-    validateToken
+    destroyToken
 }
