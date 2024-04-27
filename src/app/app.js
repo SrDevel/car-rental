@@ -23,6 +23,8 @@ const userRouter = require('../routes/user.routes');
 const carController = require('../controllers/vehicles.controller');
 const loginController = require('../controllers/login.controller');
 const dashboardController = require('../controllers/dashboard.controller');
+const officeController = require('../controllers/offices.controller');
+const indexController = require('../controllers/index.controller');
 
 const app = express();
 
@@ -49,34 +51,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 // Rutas para la vista
-app.get('/',async (req,res)=>{
-    const data = await getApiData('http://localhost:3000/api/v1/get-offices');
-    res.render('index', {array: data});
-});
-
+app.get('/', indexController.getIndex);
 app.get('/vehicles', carController.getVehicles);
-
-app.get('/offices', async (req, res) => {
-    // Obtenemos los datos de la API
-    const data = await getApiData('http://localhost:3000/api/v1/get-offices');
-    // Comprobamos si data es un array
-    if (Array.isArray(data)) {
-        // Renderizamos la vista y pasamos los datos
-        res.render('offices', { array: data });
-    } else {
-        console.log('Data no es un array');
-        res.render('offices', { array: data });
-    }
-});
-
-
-app.get('/reservations', async (req, res) => {
-    res.render('reservations', { message: '' });
-});
-
+app.get('/offices', officeController.getOffices);
 app.get('/login', loginController.getLogin);
 app.post('/login', loginController.postLogin);
- 
 app.get('/dashboard', dashboardController.getDashboard);
 
 

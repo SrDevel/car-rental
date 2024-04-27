@@ -27,60 +27,57 @@
 
             <div class="fromulario form-group">
               <label for="tipoVehiculo">Tipo de vehículo</label>
-              <div class="check">
-                <input type="checkbox" name="type" id="tipoAuto" value="Automóvil">
-                <label for="type">Automóvil</label>
-              </div>
-              <div class="check">
-                <input type="checkbox" name="type" id="tipoCamioneta" value="Vehículo intermedio">
-                <label for="type">Vehículo intermedio</label>
-              </div>
+              <% if (array && array.length > 0) { %>
+                <% const types = Array.from(new Set(array.map(car => car.type))); %>
+                <% types.forEach(type => { %>
+                  <div class="check">
+                    <input type="checkbox" name="type" id="Vehiculo" value="<%= type %>">
+                    <label for="tipoVehiculo"><%= type %></label>
+                  </div>
+                <% }); %>
+              <% } %>
             </div>
+
 
             <div class="fromulario form-group">
               <label for="personas">Cantidad de personas</label>
-              <div class="check">
-                <input type="checkbox" name="passengers" id="dosPersonas" value="2">
-                <label for="passengers">2+</label>
-              </div>
-              <div class="check">
-                <input type="checkbox" name="passengers" id="tresPersonas" value="3">
-                <label for="passengers">3+</label>
-              </div>
-              <div class="check">
-                <input type="checkbox" name="passengers" id="cuatroPersonas" value="4">
-                <label for="passengers">4+</label>
-              </div>
+              <% if (array && array.length > 0) { %>
+                <% const passengers = Array.from(new Set(array.map(car => car.passengers))); %>
+                <% passengers.forEach(passenger => { %>
+                  <div class="check">
+                    <input type="checkbox" name="passengers" id="cantidadPersonasVehiculo" value="<%= passenger %>">
+                    <label for="cantidadPersonasVehiculo"><%= passenger %>+</label>
+                  </div>
+                <% }); %>
+              <% } %>
             </div>
 
             <div class="fromulario form-group">
               <label for="puertas">Cantidad de puertas</label>
-              <div class="check">
-                <input type="checkbox" name="doors" id="dosPuertas" value="2">
-                <label for="doors">2+</label>
-              </div>
-              <div class="check">
-                <input type="checkbox" name="doors" id="cuatroPuertas" value="4">
-                <label for="doors">4+</label>
-              </div>
+              <% if (array && array.length > 0) { %>
+                <% const doors = Array.from(new Set(array.map(car => car.doors))); %>
+                <% doors.forEach(door => { %>
+                  <div class="check">
+                    <input type="checkbox" name="doors" id="cantidadPuertasVehiculo" value="<%= door %>">
+                    <label for="cantidadPuertas"><%= door %>+</label>
+                  </div>
+                <% }); %>
+              <% } %>
             </div>
 
             <div class="fromulario form-group">
-              <label for="Transmisión">Transmisión</label>
-              <div class="check">
-                <input type="checkbox" name="transmission" id="manual" value="manual"/>
-                <label for="transmission">Manual</label>
-              </div>
-              <div class="check">
-                <input type="checkbox" name="transmission" id="automatica" value="automatico">
-                <label for="transmission">Automática</label>
-              </div>
+              <label for="transmision">Transmisión</label>
+              <% if (array && array.length > 0) { %>
+                <% const transmissions = Array.from(new Set(array.map(car => car.transmission))); %>
+                <% transmissions.forEach(transmission => { %>
+                  <div class="check">
+                    <input type="checkbox" name="transmission" id="transmisionVehiculo" value="<%= transmission %>">
+                    <label for="transmisionVehiculo"><%= transmission %></label>
+                  </div>
+                <% }); %>
+              <% } %>
             </div>
-
-            <!--boton-->
-            <div class="d-flex justify-content-center">
-              <button type="submit" class="btn btn-primary" id="filtrar-btn">Filtrar</button>
-            </div>
+            
           </div>
         </div>
       </div>
@@ -98,7 +95,7 @@
                 data-doors="<%= car.doors %>"
                 data-type="<%= car.type %>"
                 >
-                  <img src="<%= car.image %>" class="card-img-top" alt="<%= car.brand %> <%= car.model %>" style="height: 150px; width: auto;">
+                  <img src="<%= car.image %>" class="card-img-top" alt="<%= car.brand %> <%= car.model %>" style="height: auto; width: auto; object-fit: cover;">
                   <div class="card-body">
                     <h5 class="card-title">
                       <%= car.brand %>

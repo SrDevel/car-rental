@@ -7,12 +7,7 @@
     width: 600px;
     padding-bottom: 50px;
     border-radius: 10px;
-    
-   
-    
-   
 }
-
 
 body {
     height: 100%;
@@ -26,10 +21,12 @@ body {
     background-attachment: fixed;
     background-size: cover;
 }
+
 .texto{
     font-size: 250%;
     padding-bottom: 30px;
 }
+
 .imagen{
     padding-left: 20%;
 }
