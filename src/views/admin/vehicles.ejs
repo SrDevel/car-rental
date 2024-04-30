@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <title>Admin vehículos - RentEasy</title>
+</head>
+<body>
+
+    <style>
+        /* Reutilizamos estilos de dashboard.css */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: #f1f4f6;
+        }
+
+        .head-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .head-title h1 {
+            font-size: 24px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .breadcrumb li {
+            list-style: none;
+            display: inline;
+        }
+
+        .breadcrumb li i {
+            margin: 0 10px;
+        }
+
+        .breadcrumb li a {
+            color: #333;
+            text-decoration: none;
+        }
+
+        .breadcrumb li a.active {
+            color: #007bff;
+        }
+
+        .btn-download {
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+
+        .btn-download i {
+            margin-right: 10px;
+        }
+
+        .table-data {
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table thead {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        table th,
+        table td {
+            padding: 15px;
+            text-align: left;
+        }
+
+        table th {
+            font-weight: 500;
+        }
+
+        table tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        table tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        table tbody tr td img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        table tbody tr td a {
+            display: inline-block;
+            margin-right: 10px;
+            padding: 5px;
+            color: #333;
+            text-decoration: none;
+        }
+
+        table tbody tr td a i {
+            font-size: 18px;
+        }
+
+        table tbody tr td a.btn-edit {
+            color: #007bff;
+        }
+
+        table tbody tr td a.btn-delete {
+            color: #dc3545;
+        }
+
+        table tbody tr td a.btn-delete:hover {
+            color: #a71d2a;
+        }
+
+        table tbody tr td a.btn-edit:hover {
+            color: #0056b3;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        .active {
+            color: #007bff;
+        }
+
+        .active i {
+            color: #007bff;
+        }
+
+        .active span {
+            color: #007bff;
+        }
+        
+    </style>
+    <%-  include('../partials/sidebar') %>
+    <section id="content">
+        <%- include('../partials/admin-nav') %>
+        <main>
+            <div class="head-title">
+                <div class="left">
+                    <h1>Vehículos</h1>
+                    <ul class="breadcrumb
+                    ">
+                        <li>
+                            <a href="#">Panel de Control</a>
+                        </li>
+                        <li><i class='bx bx-chevron-right'></i></li>
+                        <li>
+                            <a class="active" href="#">Vehículos</a>
+                        </li>
+                    </ul>
+                </div>
+                <a href="#" class="btn-download">
+                    <i class='bx bxs-cloud-download'></i>
+                    <span class="text">Descargar PDF</span>
+                </a>
+                <a href="#" class="btn-download">
+                    <i class='bx bxs-plus-circle'></i>
+                    <span class="text">Agregar vehículo</span>
+                </a>
+            </div>
+
+            <div class="table-data">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Imagen</th>
+                            <th>Marca</th>
+                            <th>Modelo</th>
+                            <th>Precio</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% vehicles.forEach(vehicle => { %>
+                            <tr>
+                                <td>
+                                    <img src="../<%= vehicle.image %>" alt="<%= vehicle.brand %> <%= vehicle.model %>">
+                                </td>
+                                <td><%= vehicle.brand %></td>
+                                <td><%= vehicle.model %></td>
+                                <td><%= Number(vehicle.price).toLocaleString('es-CO', { style: 'currency', currency: 'COP' }) %></td>
+                                <td>
+                                    <a href="#" class="btn-edit" title="Editar">
+                                        <i class='bx bx-edit'></i>
+                                    </a>
+                                    <a href="#" class="btn-delete" title="Eliminar">
+                                        <i class='bx bx-trash'></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </section>
+    <script src="../js/dashboard.js"></script>
+
+    <script>
+        // Le agregamos la clase active al enlace del sidebar
+        const link = document.querySelector('.side-menu a[href="/admin/vehicles"]');
+        link.classList.add('active');
+        
+    </script>
+</body>
+</html>

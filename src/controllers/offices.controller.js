@@ -14,6 +14,7 @@ const getOffices = async (req, res) => {
     }
 }
 
+
 module.exports = {
     getOffices
 }

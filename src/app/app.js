@@ -56,6 +56,9 @@ app.post('/login', loginController.postLogin);
 app.get('/dashboard', verifyToken, dashboardController.getDashboard);
 app.get('/logout', logoutController.logout);
 
+// Rutas para el administrador
+app.get('/admin/vehicles', verifyToken, carController.adminVehicles);
+
 
 // Rutas de la API
 app.use('/api/v1', carRouter);
