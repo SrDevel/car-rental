@@ -5,7 +5,7 @@ const getApiData = async (url) => {
         const response = await axios.get(url);
         return response.data;
     } catch (error) {
-        console.log("An error occurred");
+        console.log("An error occurred", error);
     }
 }
 
@@ -14,7 +14,7 @@ const setApiData = async (url, data) => {
         const response = await axios.post(url, data);
         return response.data;
     } catch (error) {
-        console.log("An error occurred");
+        console.log("An error occurred", error);
     }
 }
 

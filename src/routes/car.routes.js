@@ -1,43 +1,6 @@
 const exrpess = require('express');
 const router = exrpess.Router();
 const Car = require('../models/cars.model');
-const path = require('path');
-const multer = require('multer');
-
-// Destino de las imágenes
-const storage = multer.diskStorage({ 
-    destination: function(req, file, cb) {
-        cb(null, 'uploads/');
-    },
-    filename: function(req, file, cb) {
-        cb(null, "carImage-"+Date.now() + path.extname(file.originalname)); // Agrega la extensión del archivo
-    },
-    // Filtro para aceptar solo imágenes
-    fileFilter: (req, file, cb) => {
-        const filetypes = /jpeg|jpg|png|gif/;
-        const mimetype = filetypes.test(file.mimetype);
-        const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
-        if (mimetype && extname) {
-            return cb(null, true);
-        }
-        cb("Error: Archivo debe ser una imagen válida");
-    },
-    // Limite de tamaño de la imagen
-    limits: { fileSize: 10000000 } // 10MB
-});
-
-// Si no existe la carpeta la crea
-const checkFolder = () => {
-    const fs = require('fs');
-    const dir = './uploads';
-    if (!fs.existsSync(dir)){
-        fs.mkdirSync(dir);
-    }
-}
-checkFolder();
-
-// Middleware para subir la imagen
-const upload = multer({ storage: storage });
 
 // Middleware para parsear el body de las peticiones
 router.use(exrpess.json());
@@ -96,12 +59,8 @@ router.get('/get-car/:id', getCar,async (req, res)=>{
 });
 
 // Crear un carro
-router.post('/create-car', upload.single('image'), async (req, res)=>{
+router.post('/create-car', async (req, res)=>{
     const newCar = req.body;
-    // Subir imagen
-    if(req.file) {
-        newCar.image = req.file.path.replace(/\\/g, '/');
-    }
     if(!newCar.brand || !newCar.model || !newCar.year || !newCar.color || !newCar.price || !newCar.available || !newCar.transmission || !newCar.fuel || !newCar.doors || !newCar.passengers || !newCar.type ||  !newCar.luggage){
         res.status(400).json({message: 'All fields are required'});
     } else {

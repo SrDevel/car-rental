@@ -7,6 +7,9 @@ const router = express.Router();
 const cookieParser = require('cookie-parser');
 const { verifyToken } = require('../security/jwt.config');
 
+// Configuranos multer para subir archivos
+const fileUpload = require('../utils/fileUpload.util');
+
 // Configuración de variables de entorno y middlewares de express para parsear datos de formularios y cookies
 dotenv.config();
 router.use(bodyParser.urlencoded({ extended: true }));
@@ -58,6 +61,8 @@ app.get('/logout', logoutController.logout);
 
 // Rutas para el administrador
 app.get('/admin/vehicles', verifyToken, carController.adminVehicles);
+app.get('/admin/new-vehicle', verifyToken, carController.newVehicle);
+app.post('/admin/new-vehicle', verifyToken, fileUpload.single('image'), carController.createVehicle);
 
 
 // Rutas de la API
