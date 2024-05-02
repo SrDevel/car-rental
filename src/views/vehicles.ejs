@@ -95,7 +95,7 @@
                 data-doors="<%= car.doors %>"
                 data-type="<%= car.type %>"
                 >
-                  <img src="<%= car.image %>" class="card-img-top" alt="<%= car.brand %> <%= car.model %>" style="height: auto; width: auto; object-fit: cover;">
+                  <img src="<%= car.image %>" class="card-img-top" alt="<%= car.brand %> <%= car.model %>">
                   <div class="card-body">
                     <h5 class="card-title">
                       <%= car.brand %>
@@ -179,24 +179,25 @@
 
         // Función para filtrar los autos
         function filtrarAutos() {
-            const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
-            const contenedorAutos = document.querySelector('.col-lg-9');
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            const cars = document.querySelectorAll('.vehiculos .card');
 
-            contenedorAutos.querySelectorAll('.card').forEach(function(auto) {
-                let mostrarAuto = true; // Suponemos inicialmente que se debe mostrar el auto
-
+            cars.forEach(function(car) {
+                let mostrar = true;
                 checkboxes.forEach(function(checkbox) {
-                    // Si el auto no cumple con uno de los criterios, no lo mostramos
-                    if (auto.dataset[checkbox.name] !== checkbox.value) {
-                        mostrarAuto = false;
+                    if (checkbox.checked) {
+                        const key = checkbox.name;
+                        const value = checkbox.value;
+                        if (car.dataset[key] !== value) {
+                            mostrar = false;
+                        }
                     }
                 });
 
-                // Mostrar u ocultar el auto según la lógica establecida
-                if (mostrarAuto) {
-                    auto.style.display = 'block';
+                if (mostrar) {
+                    car.style.display = 'block';
                 } else {
-                    auto.style.display = 'none';
+                    car.style.display = 'none';
                 }
             });
         }
