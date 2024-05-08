@@ -1,4 +1,4 @@
-const { getApiData, setApiData } = require("../utils/api.util")
+const { getApiData, setApiData, updateApiData, deleteApiData } = require("../utils/api.util")
 
 const getVehicles = async (req, res) => {
     const data = await getApiData('http://localhost:3000/api/v1/get-cars');
@@ -49,17 +49,14 @@ const createVehicle = async (req, res) => {
             image: req.file.filename // Ruta de la imagen
         };
 
-        // Subir imagen
+        // Subir imagen, reemplazar las barras invertidas por barras normales para que se pueda leer en el navegador
         newCar.image = req.file.path.replace(/\\/g, '/');
 
-        // Llamar a la función para enviar los datos al servidor API
         const data = await setApiData('http://localhost:3000/api/v1/create-car', newCar);
 
-        // Redirigir si la creación del vehículo fue exitosa
         if (data) {
             return res.redirect('/admin/vehicles');
         } else {
-            // Renderizar nuevamente el formulario si falla la creación del vehículo
             return res.render('admin/new-vehicle');
         }
     } catch (error) {
@@ -68,10 +65,26 @@ const createVehicle = async (req, res) => {
     }
 };
 
+const deleteVehicle = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const data = await deleteApiData(`http://localhost:3000/api/v1/delete-car/${id}`);
+        if (data) {
+            return res.redirect('/admin/vehicles?deleted=true');
+        } else {
+            return res.redirect('/admin/vehicles?deleted=false');
+        }
+    } catch (error) {
+        console.error("Error al eliminar el vehículo:", error);
+        return res.status(500).send("Error interno del servidor.");
+    }
+}
+
 
 module.exports = {
     getVehicles,
     adminVehicles,
     newVehicle,
-    createVehicle
+    createVehicle,
+    deleteVehicle
 }

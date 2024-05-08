@@ -1,0 +1,281 @@
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: consolas;
+    }
+
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background: #ededed;
+    }
+
+    .preloader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 1);
+        /* Fondo semitransparente */
+        z-index: 9999;
+        /* Asegura que el preloader esté por encima de otros elementos */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .road {
+        position: relative;
+        width: 700px;
+        height: 150px;
+        background: #333;
+        border-radius: 75px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transform-style: preserve-3d;
+        perspective: 500px;
+    }
+
+    .road::before {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 4px;
+        background: linear-gradient(90deg, #fff, #fff 50%,transparent 50%,  transparent 100%);
+        background-size: 50px;
+        animation: animate_road 0.5s linear infinite;
+    }
+
+    @keyframes animate_road {
+        0% {
+            background-position: 50px 0;
+        }
+
+        100% {
+            background-position: 0 0;
+        }
+    }
+
+    .car {
+        position: absolute;
+        left: 50px;
+        width: 200px;
+        height: 80px;
+        background: hsl(0, 0%, 40%);
+        border-radius: 10px;
+        box-shadow: -10px 10px rgba(0, 0, 0, 0.25);
+        transform-style: preserve-3d;
+        perspective: 800px;
+        animation: animate_car 2s linear infinite;
+        z-index: 10;
+    }
+
+    .car:nth-child(2) {
+        left: initial;
+        right: 150px;
+        animation: animate_car 4s linear infinite;
+        animation-delay: -1s;
+        z-index: 9;
+    }
+
+    @keyframes animate_car {
+        0% {
+            transform: translateX(20px) translateY(-20px);
+        }
+
+        25% {
+            transform: translateX(-10) translateY(0);
+        }
+
+        50% {
+            transform: translateX(20px) translateY(20px);
+        }
+
+        75% {
+            transform: translateX(-10px) translateY(0px);
+        }
+
+        100% {
+            transform: translateX(20px) translateY(-20px);
+        }
+    }
+
+    .car::before {
+        content: '';
+        position: absolute;
+        top: 12px;
+        left: 2px;
+        width: 5px;
+        height: 15px;
+        border-radius: 2px;
+        background: #fc3c25;
+        box-shadow: 0 42px 0 #fc3c25;
+    }
+
+    .car::after {
+        content: '';
+        position: absolute;
+        top: 10px;
+        right: 2px;
+        width: 6px;
+        height: 16px;
+        border-radius: 2px;
+        background: #fff;
+        box-shadow: 0 42px 0 #fff;
+    }
+
+    .car span {
+        position: absolute;
+        inset: 5px 10px;
+        background: #888686;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .car span::before {
+        content: 'RenteEasy';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) rotate(90deg);
+        background: #fff;
+        padding: 2px;
+        font-size: 0.50em;
+        font-weight: 1000;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        border-radius: 2px;
+        box-shadow: 0 0 1px #0005;
+        z-index: 10;
+    }
+
+    .car span::before:nth-child(2) {
+        content: 'Easy';
+    }
+
+
+    .car span b {
+        position: absolute;
+        inset: 0 30px;
+        background: #111;
+        border-radius: 10px;
+    }
+
+    .car span b::before {
+        content: '';
+        position: absolute;
+        inset: 6px 25px;
+        background: #888686;
+        border-radius: 5px;
+    }
+
+    .car span b::after {
+        content: '';
+        position: absolute;
+        inset: 0px 58px;
+        background: #888686;
+    }
+
+    .car span i {
+        position: absolute;
+        inset: 0;
+    }
+
+    .car span i::before {
+        content: '';
+        position: absolute;
+        top: 7px;
+        left: 20px;
+        width: 40px;
+        height: 5px;
+        background: #888686;
+        transform-origin: right;
+        transform: rotate(15deg);
+        box-shadow: 100px 34px #888686;
+    }
+
+    .car span i::after {
+        content: '';
+        position: absolute;
+        bottom: 7px;
+        left: 20px;
+        width: 40px;
+        height: 5px;
+        background: #888686;
+        transform-origin: right;
+        transform: rotate(-15deg);
+        box-shadow: 100px -34px #888686;
+    }
+
+    .car .light_beam {
+        position: absolute;
+        top: 5px;
+        right: -2px;
+        width: 10px;
+        height: 70px;
+        background: #0002;
+        border-radius: 15px;
+        transform-style: preserve-3d;
+    }
+
+    .car .light_beam::before {
+        content: '';
+        position: absolute;
+        top: 5px;
+        left: 0;
+        width: 150px;
+        height: 16px;
+        background: linear-gradient(90deg, #fff6, transparent);
+        transform-origin: left;
+        transform: perspective(500px) rotateY(-50deg);
+    }
+
+    .car .light_beam::after {
+        content: '';
+        position: absolute;
+        bottom: 5px;
+        left: 0;
+        width: 150px;
+        height: 16px;
+        background: linear-gradient(90deg, #fff6, transparent);
+        transform-origin: left;
+        transform: perspective(500px) rotateY(-50deg);
+    }
+
+</style>
+
+<div class="preloader">
+    <div class="road">
+        <div class="car">
+            <div class="light_beam"></div>
+            <span>
+                <b></b>
+                <i></i>
+            </span>
+        </div>
+        <div class="car">
+            <div class="light_beam"></div>
+            <span>
+                <b></b>
+                <i></i>
+            </span>
+        </div>
+    </div>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Muestra el preloader cuando la página comienza a cargarse
+        document.querySelector(".preloader").style.display = "flex";
+      });
+
+      // Oculta el preloader cuando la página haya terminado de cargar
+      window.addEventListener("load", function () {
+        document.querySelector(".preloader").style.display = "none";
+      });
+</script>

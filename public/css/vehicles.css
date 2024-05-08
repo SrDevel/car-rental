@@ -1,7 +1,23 @@
+* {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
+}
+
+body {
+    display: block !important;
+}
+
 #contenedor {
+    /* Creamos un gradiente lineal con los colores de la empresa */
     background: -webkit-linear-gradient(to top right, #082055, #03081E);
     background: -moz-linear-gradient(to top right, #082055, #03081E);
     background: linear-gradient(to top right, #082055, #03081E);
+    margin: 0 !important;
+    padding: 0 !important;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 100vh;
+    overflow-x: hidden;
 }
 
 .titulo-pagina {

@@ -121,7 +121,7 @@ router.put('/get-car/:id', getCar, async (req, res)=>{
 });
 
 // Eliminar un carro
-router.delete('/get-car/:id', getCar, async (req, res)=>{
+router.delete('/delete-car/:id', getCar, async (req, res)=>{
     try {
         const car = res.car;
         await car.destroy({
