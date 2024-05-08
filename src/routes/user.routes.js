@@ -1,6 +1,7 @@
 const exrpess = require('express');
 const router = exrpess.Router();
 const User = require('../models/user.model');
+const { encrypt, decrypt } = require('../security/password.operations');
 
 // Middleware para parsear el body de las peticiones
 router.use(exrpess.json());
@@ -68,11 +69,11 @@ router.post('/create-user', async (req, res) => {
             message: 'Missing fields'
         });
     }
-
+    const encryptedPassword = await encrypt(password);
     try {
         const newUser = await User.create({
             username,
-            password
+            password: encryptedPassword
         });
         res.status(201).json(newUser);
     } catch (err){
@@ -134,22 +135,35 @@ router.post('/validate-user', async (req, res) => {
     try {
         const user = await User.findOne({
             where: {
-                username: username,
-                password: password
+                username
             }
         });
-        if (!user){
+
+        if (!user) {
             return res.status(404).json({
                 message: 'User not found'
             });
         }
-        res.status(200).json(user);
-    } catch (err){
+
+        const isValid = await decrypt(password, user.password);
+
+        if(!isValid){
+            return res.status(401).json({
+                message: 'Invalid password'
+            });
+        }
+
+        res.status(200).json({
+            message: 'Valid user'
+        });
+    } catch (error) {
         res.status(500).json({
-            message: 'Error logging in'
+            message: 'Error validating user'
         });
         console.error(err);
     }
 });
+
+
 
 module.exports = router;
