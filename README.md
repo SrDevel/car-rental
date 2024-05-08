@@ -7,6 +7,7 @@ Este proyecto es una aplicación web que permite a los usuarios alquilar vehícu
 - node.js versión 20.11.1
 - base de datos MySQL (Se puede utilizar XAMPP para crear una base de datos local o Docker para crear un contenedor con una base de datos MySQL)
 - npm versión 10.2.4
+- Postman (O cualquier otra herramienta para realizar peticiones HTTP)
 
 ### Pasos para ejecutar el proyecto
 1. Clonar el repositorio 
@@ -18,6 +19,8 @@ DB_USER=tu-nombre-de-usuario
 DB_PASSWORD=tu-contraseña
 DB_NAME=nombre-de-tu-base-de-datos
 PORT=3000-o-el-puerto-que-desees
+
+JWT_SECRET=una-cadena-de-texto-para-generar-tokens
 ```
 4. Instalar las dependencias del proyecto
 ```bash
@@ -34,4 +37,8 @@ npm run dev
 - Express
 - MySQL
 - (Se utilizó el ORM Sequelize para la conexión a la base de datos)
-
+- Axios (Para realizar peticiones HTTP a la API)
+- Bootstrap (Para el diseño de la aplicación)
+- EJS (Para renderizar las vistas)
+- Bcrypt (Para encriptar contraseñas)
+- JWT (Para autenticación de usuarios)
