@@ -170,6 +170,14 @@
             </select>
         </div>
         <div class="col-md-6">
+            <label for="officeId" class="form-label">Oficina</label>
+            <select id="officeId" class="form-select" name="officeId">
+                <% offices.forEach(offices => { %>
+                    <option value="<%= offices._id %>"><%= offices.name %></option>
+                <% }) %>
+            </select>
+        </div>
+        <div class="col-md-6">
             <label for="image" class="form-label">Imagen</label>
             <input type="file" class="form-control form-control-sm" id="image" name="image">
         </div>

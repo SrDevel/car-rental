@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="../css/admin-vehicles.css">
+    <title>Editando <%= vehicle.brand %> <%= vehicle.model %> - RentEasy</title>
+</head>
+<body>
+    <%-  include('../partials/sidebar') %>
+        <section id="content">
+            <%- include('../partials/admin-nav') %>
+                <main>
+                    <div class="notification-box flex flex-col items-center justify-center fixed w-full z-50 p-3">
+                        <!-- Notification container -->
+                    </div>
+                    <div class="head-title
+                    ">
+                        <div class="left">
+                            <h1>Editando <%= vehicle.brand %> <%= vehicle.model %></h1>
+                            <ul class="breadcrumb
+                            ">
+                                <li>
+                                    <a href="#">Panel de Control</a>
+                                </li>
+                                <li><i class='bx bx-chevron-right'></i></li>
+                                <li>
+                                    <a href="/admin/vehicles">Vehículos</a>
+                                </li>
+                                <li><i class='bx bx-chevron-right'></i></li>
+                                <li>
+                                    <a class="active" href="#">Editando <%= vehicle.brand %> <%= vehicle.model %></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <form action="/admin/update-vehicle/<%= vehicle._id %>" method="POST" enctype="multipart/form-data" class="form">
+                        <div class="form-group
+                        ">
+                            <label for="brand">Marca</label>
+                            <input type="text" name="brand" id="brand" value="<%= vehicle.brand %>" required>
+                        </div>
+                        <div class="form-group
+                        ">
+                            <label for="model">Modelo</label>
+                            <input type="text" name="model" id="model" value="<%= vehicle.model %>" required>
+                        </div>
+                        <div class="form-group
+                        ">
+                            <label for="price">Precio</label>
+                            <input type="number" name="price" id="price" value="<%= vehicle.price %>" required>
+                        </div>
+                        <div class="form-group
+                        ">
+                            <label for="image">Imagen</label>
+                            <input type="file" name="image" id="image">
+                        </div>
+                        <div class="form-group
+                        ">
+                            <label for="description">Descripción</label>
+                            <textarea name="description" id="description" cols="30" rows="10" required><%= vehicle.description %></textarea>
+                        </div>
+                        <div class="form-group flex justify-center items-center">
+                            <button type="submit" class="btn-submit">Actualizar</button>
+                        </div>
+                    </form>
+                </main>
+        </section>
+</body>
+</html>

@@ -21,6 +21,17 @@ const adminVehicles = async (req, res) => {
 }
 
 const newVehicle = async (req, res) => {
+    data = await getApiData('http://localhost:3000/api/v1/get-offices');
+    try {
+        if (Array.isArray(data)) {
+            res.render('admin/new-vehicle', { offices: data });
+        } else {
+            res.render('admin/new-vehicle', { offices: [] });
+        }
+    } catch (error) {
+        console.error("Error al obtener las oficinas:", error);
+        return res.status(500).send("Error interno del servidor.");
+    }
     res.render('admin/new-vehicle');
 }
 
@@ -80,11 +91,26 @@ const deleteVehicle = async (req, res) => {
     }
 }
 
+const updateVehicle = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const data = await updateApiData(`http://localhost:3000/api/v1/update-car/${id}`);
+        if (data) {
+            return res.redirect('/admin/vehicles?updated=true');
+        } else {
+            return res.redirect('/admin/vehicles?updated=false');
+        }
+    } catch (error) {
+        console.error("Error al actualizar el vehículo:", error);
+        return res.status(500).send("Error interno del servidor.");
+    }
+}
 
 module.exports = {
     getVehicles,
     adminVehicles,
     newVehicle,
     createVehicle,
-    deleteVehicle
+    deleteVehicle,
+    updateVehicle
 }

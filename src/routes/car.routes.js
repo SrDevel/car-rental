@@ -61,7 +61,7 @@ router.get('/get-car/:id', getCar,async (req, res)=>{
 // Crear un carro
 router.post('/create-car', async (req, res)=>{
     const newCar = req.body;
-    if(!newCar.brand || !newCar.model || !newCar.year || !newCar.color || !newCar.price || !newCar.available || !newCar.transmission || !newCar.fuel || !newCar.doors || !newCar.passengers || !newCar.type ||  !newCar.luggage){
+    if(!newCar.brand || !newCar.model || !newCar.year || !newCar.color || !newCar.price || !newCar.available || !newCar.transmission || !newCar.fuel || !newCar.doors || !newCar.passengers || !newCar.type ||  !newCar.luggage || !newCar.officeId){
         res.status(400).json({message: 'All fields are required'});
     } else {
         try{
@@ -79,7 +79,8 @@ router.post('/create-car', async (req, res)=>{
                 passengers: newCar.passengers,
                 luggage: newCar.luggage,
                 type: newCar.type,
-                image: newCar.image
+                image: newCar.image,
+                officeId: newCar.officeId
             });
             res.status(201).json({message: 'Car created successfully'});
         } catch (err){
@@ -107,6 +108,7 @@ router.put('/get-car/:id', getCar, async (req, res)=>{
         car.luggage = req.body.luggage || car.luggage;
         car.type = req.body.type || car.type;
         car.image = req.body.image || car.image;
+        car.officeId = req.body.officeId || car.officeId;
 
         await car.save();
         res.status(200).json({
