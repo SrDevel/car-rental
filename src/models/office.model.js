@@ -7,7 +7,6 @@ Office.init(
     {
         id: {
             type: DataTypes.UUID,
-            autoIncrement: true,
             defaultValue: UUIDV4,
             primaryKey: true
         },
@@ -40,12 +39,11 @@ Office.init(
 
 module.exports = Office;
 
-// (async () =>{
-//    try {
-//         await sequelize.sync({force: true});
-//         console.log('Modelo Office sincronizado');
-//    } catch (error) {
-//          console.error(error);
-//          console.warn('Error al sincronizar el modelo Office');
+// (async () => {
+//     try {
+//         await  sequelize.sync({ force: true });
+//         console.log('La tabla Office ha sido creada');
+//     } catch (error) {
+//         console.error('Error creando la tabla Office', error);
 //     }
 // })();
