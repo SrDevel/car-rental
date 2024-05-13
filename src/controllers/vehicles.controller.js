@@ -21,18 +21,12 @@ const adminVehicles = async (req, res) => {
 }
 
 const newVehicle = async (req, res) => {
-    data = await getApiData('http://localhost:3000/api/v1/get-offices');
-    try {
-        if (Array.isArray(data)) {
-            res.render('admin/new-vehicle', { offices: data });
-        } else {
-            res.render('admin/new-vehicle', { offices: [] });
-        }
-    } catch (error) {
-        console.error("Error al obtener las oficinas:", error);
-        return res.status(500).send("Error interno del servidor.");
+    const data = await getApiData('http://localhost:3000/api/v1/get-offices');
+    if (Array.isArray(data)) {
+        res.render('admin/new-vehicle', { offices: data });
+    } else {
+        res.render('admin/new-vehicle', { offices: [] });
     }
-    res.render('admin/new-vehicle');
 }
 
 const createVehicle = async (req, res) => {
@@ -57,7 +51,8 @@ const createVehicle = async (req, res) => {
             passengers: req.body.passengers,
             luggage: req.body.luggage,
             type: req.body.type,
-            image: req.file.filename // Ruta de la imagen
+            image: req.file.filename, // Ruta de la imagen
+            officeId: req.body.officeId
         };
 
         // Subir imagen, reemplazar las barras invertidas por barras normales para que se pueda leer en el navegador
@@ -91,10 +86,30 @@ const deleteVehicle = async (req, res) => {
     }
 }
 
+const getVehicle = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const data = await getApiData(`http://localhost:3000/api/v1/get-car/${id}`);
+        const offices = await getApiData('http://localhost:3000/api/v1/get-offices');
+        if (data && offices) {
+            return res.render('admin/update-vehicle', { 
+                vehicle: data,
+                offices: offices
+             });
+        } else {
+            return res.redirect('/admin/vehicles');
+        }
+    } catch (error) {
+        console.error("Error al obtener el vehículo:", error);
+        return res.status(500).send("Error interno del servidor.");
+    }
+}
+
+
 const updateVehicle = async (req, res) => {
     try {
         const id = req.params.id;
-        const data = await updateApiData(`http://localhost:3000/api/v1/update-car/${id}`);
+        const data = await updateApiData(`http://localhost:3000/api/v1/update-car/${id}`, req.body);
         if (data) {
             return res.redirect('/admin/vehicles?updated=true');
         } else {
@@ -106,11 +121,13 @@ const updateVehicle = async (req, res) => {
     }
 }
 
+
 module.exports = {
     getVehicles,
     adminVehicles,
     newVehicle,
     createVehicle,
     deleteVehicle,
+    getVehicle,
     updateVehicle
 }

@@ -3,69 +3,211 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="../css/admin-vehicles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <title>Editando <%= vehicle.brand %> <%= vehicle.model %> - RentEasy</title>
 </head>
 <body>
-    <%-  include('../partials/sidebar') %>
-        <section id="content">
-            <%- include('../partials/admin-nav') %>
-                <main>
-                    <div class="notification-box flex flex-col items-center justify-center fixed w-full z-50 p-3">
-                        <!-- Notification container -->
-                    </div>
-                    <div class="head-title
-                    ">
-                        <div class="left">
-                            <h1>Editando <%= vehicle.brand %> <%= vehicle.model %></h1>
-                            <ul class="breadcrumb
-                            ">
-                                <li>
-                                    <a href="#">Panel de Control</a>
-                                </li>
-                                <li><i class='bx bx-chevron-right'></i></li>
-                                <li>
-                                    <a href="/admin/vehicles">Vehículos</a>
-                                </li>
-                                <li><i class='bx bx-chevron-right'></i></li>
-                                <li>
-                                    <a class="active" href="#">Editando <%= vehicle.brand %> <%= vehicle.model %></a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <form action="/admin/update-vehicle/<%= vehicle._id %>" method="POST" enctype="multipart/form-data" class="form">
-                        <div class="form-group
-                        ">
-                            <label for="brand">Marca</label>
-                            <input type="text" name="brand" id="brand" value="<%= vehicle.brand %>" required>
-                        </div>
-                        <div class="form-group
-                        ">
-                            <label for="model">Modelo</label>
-                            <input type="text" name="model" id="model" value="<%= vehicle.model %>" required>
-                        </div>
-                        <div class="form-group
-                        ">
-                            <label for="price">Precio</label>
-                            <input type="number" name="price" id="price" value="<%= vehicle.price %>" required>
-                        </div>
-                        <div class="form-group
-                        ">
-                            <label for="image">Imagen</label>
-                            <input type="file" name="image" id="image">
-                        </div>
-                        <div class="form-group
-                        ">
-                            <label for="description">Descripción</label>
-                            <textarea name="description" id="description" cols="30" rows="10" required><%= vehicle.description %></textarea>
-                        </div>
-                        <div class="form-group flex justify-center items-center">
-                            <button type="submit" class="btn-submit">Actualizar</button>
-                        </div>
-                    </form>
-                </main>
-        </section>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .formulary {
+            margin: 20px 20% !important;
+            max-width: 800px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1) !important;
+        }
+
+        header {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        a:hover {
+            text-decoration: none;
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        input[type="file"] {
+            padding: 5px;
+        }
+
+        button {
+            margin-top: 20px auto !important;
+            padding: 10px 20px;
+        }
+
+        .row {
+            margin: 3em 20% !important;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(82, 76, 76, 0.6) !important;
+            transition: all 0.3s ease;       
+        }
+
+        .row:hover {
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(38, 37, 37, 0.6) !important;
+        }
+
+        .col-md-6 {
+            float: left;
+            width: 50%;
+            padding: 0 15px;
+        }
+
+
+        .form-select {
+            padding: 5px;
+        }
+
+        .col-12 {
+            padding: 0 15px;
+        }
+
+        .back {
+            text-align: center;
+            margin: 20px 30%;
+            background-color: #616264;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .back:hover {
+            background-color: #757d86;
+        }
+
+        @media (max-width: 768px) {
+            .formulary {
+                margin: 20px 5% !important;
+            }
+
+            .row {
+                margin: 3em 5% !important;
+            }
+
+            .back {
+                margin: 20px 10%;
+            }
+        }
+
+        .header {
+            margin: 0;
+        }
+
+
+    </style>
+    <header>
+        <h1 class="header">Editando: <%= vehicle.brand %> <%= vehicle.model %></h1>
+
+    </header>
+
+    <form action="/admin/update-vehicle/<%= vehicle.id %>" method="post" enctype="multipart/form-data" class="row g-3 formulary align-items-center justify-content-center text-center text-md-start ">
+        <div class="col-md-6">
+            <label for="brand" class="form-label">Marca</label>
+            <input type="text" class="form-control" id="brand" name="brand" value="<%= vehicle.brand %>">
+        </div>
+        <div class="col-md-6">
+            <label for="model" class="form-label">Modelo</label>
+            <input type="text" class="form-control" id="model" name="model" value="<%= vehicle.model %>">
+        </div>
+        <div class="col-md-6">
+            <label for="year" class="form-label">Año</label>
+            <input type="number" class="form-control" id="year" name="year" value="<%= vehicle.year %>">
+        </div>
+        <div class="col-md-6">
+            <label for="color" class="form-label">Color</label>
+            <input type="text" class="form-control" id="color" name="color" value="<%= vehicle.color %>">
+        </div>
+        <div class="col-md-6">
+            <label for="price" class="form-label">Precio</label>
+            <input type="number" class="form-control" id="price" name="price" value="<%= vehicle.price %>">
+        </div>
+        <div class="col-md-6">
+            <label for="available" class="form-label">Disponible</label>
+            <select id="available" class="form-select" name="available">
+                <option value="true" <%= vehicle.available ? 'selected' : '' %>>Sí</option>
+                <option value="false" <%= !vehicle.available ? 'selected' : '' %>>No</option>
+            </select>
+        </div>
+        <div class="col-md-6">
+            <label for="transmission" class="form-label">Transmisión</label>
+            <select id="transmission" class="form-select" name="transmission">
+                <option value="manual" <%= vehicle.transmission === 'manual' ? 'selected' : '' %>>Manual</option>
+                <option value="automatic" <%= vehicle.transmission === 'automatic' ? 'selected' : '' %>>Automática</option>
+            </select>
+        </div>
+        <div class="col-md-6">
+            <label for="fuel" class="form-label">Combustible</label>
+            <select id="fuel" class="form-select" name="fuel">
+                <option value="gasoline" <%= vehicle.fuel === 'gasoline' ? 'selected' : '' %>>Gasolina</option>
+                <option value="diesel" <%= vehicle.fuel === 'diesel' ? 'selected' : '' %>>Diésel</option>
+                <option value="electric" <%= vehicle.fuel === 'electric' ? 'selected' : '' %>>Eléctrico</option>
+                <option value="hybrid" <%= vehicle.fuel === 'hybrid' ? 'selected' : '' %>>Híbrido</option>
+            </select>
+        </div>
+        <div class="col-md-6">
+            <label for="doors" class="form-label">Puertas</label>
+            <input type="number" class="form-control" id="doors" name="doors" value="<%= vehicle.doors %>">
+        </div>
+        <div class="col-md-6">
+            <label for="passengers" class="form-label">Pasajeros</label>
+            <input type="number" class="form-control" id="passengers" name="passengers" value="<%= vehicle.passengers %>">
+        </div>
+        <div class="col-md-6">
+            <label for="luggage" class="form-label">Equipaje</label>
+            <input type="number" class="form-control" id="luggage" name="luggage" value="<%= vehicle.luggage %>">
+        </div>
+        <div class="col-md-6">
+            <label for="type" class="form-label">Tipo</label>
+            <select id="type" class="form-select" name="type">
+                <option value="Sedán" <%= vehicle.type === 'Sedán' ? 'selected' : '' %>>Sedán</option>
+                <option value="SUV" <%= vehicle.type === 'SUV' ? 'selected' : '' %>>SUV</option>
+                <option value="Pickup" <%= vehicle.type === 'Pickup' ? 'selected' : '' %>>Pikup</option>
+                <option value="Van" <%= vehicle.type === 'Van' ? 'selected' : '' %>>Van</option>
+            </select>
+        </div>
+        <div class="col-md-6">
+            <label for="officeId" class="form-label">Oficina</label>
+            <select id="officeId" class="form-select" name="officeId">
+                <% if (!offices) { %>
+                    <option value="">No hay oficinas</option>
+                <% } %> 
+                <% offices.forEach(offices => { %>
+                    <option value="<%= offices.id %>" <%= vehicle.officeId === offices.id ? 'selected' : '' %>><%= offices.name %></option>
+                <% }); %>
+            </select>
+        </div>
+        <div class="col-md-6">
+            <label for="image" class="form-label">Imagen</label>
+            <input type="file" class="form-control form-control-sm" id="image" name="image">
+        </div>
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary">Guardar</button>
+        </div>
+    </form>
+    <a class="back" href="/admin/vehicles">Volver</a>
 </body>
 </html>

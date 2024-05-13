@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin oficinas - RentEasy</title>
+</head>
+<body>
+    <%-  include('../partials/sidebar') %>
+        <section id="content">
+            <%- include('../partials/admin-nav') %>
+                <main>
+                    <div class="notification-box flex flex-col items-center justify-center fixed w-full z-50 p-3">
+                        <!-- Notification container -->
+                    </div>
+                    
+                    <div class="head-title">
+                        <div class="left">
+                            <h1>Oficinas</h1>
+                            <ul class="breadcrumb
+                            ">
+                                <li>
+                                    <a href="#">Panel de Control</a>
+                                </li>
+                                <li><i class='bx bx-chevron-right'></i></li>
+                                <li>
+                                    <a class="active" href="#">Oficinas</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <a href="/admin/new-office" class="btn-download">
+                            <i class='bx bxs-plus-circle'></i>
+                            <span class="text">Agregar oficina</span>
+                        </a>
+                    </div>
+
+                    <div class="table-data office">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Dirección</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% offices.forEach(office=> { %>
+                                    <tr>
+                                        <td>
+                                            <%= office.name %>
+                                        </td>
+                                        <td>
+                                            <%= office.address %>
+                                        </td>
+                                        <td>
+                                            <a href="/admin/update-office/<%= office.id %>" class="btn-edit">
+                                                <i class='bx bx-pencil'></i>
+                                            </a>
+                                            <a href="/admin/delete-office/<%= office.id %>" class="btn-delete
+                                            ">
+                                                <i class='bx bx-trash'></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                <% }) %>
+                            </tbody>
+                        </table>
+                    </div>
+                </main>
+        </section>
+        <%- include('../partials/footer') %>
+        <script src="/js/admin.js"></script>
+</body>
+</html>

@@ -64,6 +64,8 @@ app.get('/admin/vehicles', verifyToken, carController.adminVehicles);
 app.get('/admin/new-vehicle', verifyToken, carController.newVehicle);
 app.post('/admin/new-vehicle', verifyToken, fileUpload.single('image'), carController.createVehicle);
 app.get('/admin/delete-vehicle/:id', verifyToken, carController.deleteVehicle);
+app.get('/admin/edit-vehicle/:id', verifyToken, carController.getVehicle);
+app.post('/admin/update-vehicle/:id', verifyToken, fileUpload.single('image'), carController.updateVehicle);
 
 
 

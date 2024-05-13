@@ -24,7 +24,7 @@
             padding: 20px;
             border: 1px solid #ccc;
             border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1) !important;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.6) !important;
         }
 
         header {
@@ -98,6 +98,22 @@
             box-shadow: 0 0 0 0.25rem rgba(38, 143, 255, 0.5);
         }
 
+        .back {
+            text-align: center;
+            margin: 20px 40% !important;
+            background-color: #6c757d;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .back:hover {
+            text-decoration: none;
+            color: white;
+            background-color: #393d41;
+        }
     </style>
 
     <header>
@@ -172,9 +188,12 @@
         <div class="col-md-6">
             <label for="officeId" class="form-label">Oficina</label>
             <select id="officeId" class="form-select" name="officeId">
+                <% if (!offices) { %>
+                    <option value="">No hay oficinas</option>
+                <% } %> 
                 <% offices.forEach(offices => { %>
-                    <option value="<%= offices._id %>"><%= offices.name %></option>
-                <% }) %>
+                    <option value="<%= offices.id %>"><%= offices.name %></option>
+                <% }); %>
             </select>
         </div>
         <div class="col-md-6">
@@ -185,7 +204,7 @@
             <button type="submit" class="btn btn-primary">Guardar</button>
         </div>
     </form>
-    <a href="/admin/vehicles">Volver</a>
+    <a class="back" href="/admin/vehicles">Volver</a>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>

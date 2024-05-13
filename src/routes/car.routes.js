@@ -143,4 +143,33 @@ router.delete('/delete-car/:id', getCar, async (req, res)=>{
 
 });
 
+router.put('/update-car/:id', getCar, async (req, res)=>{
+    try {
+        const car = res.car;
+        car.brand = req.body.brand || car.brand;
+        car.model = req.body.model || car.model;
+        car.year = req.body.year || car.year;
+        car.color = req.body.color || car.color;
+        car.price = req.body.price || car.price;
+        car.available = req.body.available || car.available;
+        car.transmission = req.body.transmission || car.transmission;
+        car.fuel = req.body.fuel || car.fuel;
+        car.doors = req.body.doors || car.doors;
+        car.passengers = req.body.passengers || car.passengers;
+        car.luggage = req.body.luggage || car.luggage;
+        car.type = req.body.type || car.type;
+        car.image = req.body.image || car.image;
+        car.officeId = req.body.officeId || car.officeId;
+
+        await car.save();
+        res.status(200).json({
+            message: 'Car updated successfully'
+        })
+    } catch (err){
+        res.status(400).json({
+            message: 'Error updating car'
+        })
+        console.error(err);
+    }
+});
 module.exports = router;
