@@ -71,6 +71,8 @@ app.post('/admin/update-vehicle/:id', verifyToken, fileUpload.single('image'), c
 
 // Oficinas
 app.get('/admin/offices', verifyToken, officeController.adminOffices);
+app.get('/admin/new-office', verifyToken, officeController.newOffice);
+app.post('/admin/new-office', verifyToken, officeController.createOffice);
 
 
 // Rutas de la API

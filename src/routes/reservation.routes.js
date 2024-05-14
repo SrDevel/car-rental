@@ -2,6 +2,7 @@ const exrpess = require('express');
 const Reservation = require('../models/reservation.model');
 const router = exrpess.Router();
 const path = require('path');
+const { verifyToken } = require('../security/jwt.config');
 
 // Middleware para parsear el body de las peticiones
 router.use(exrpess.json());
@@ -60,7 +61,7 @@ router.get('/get-reservation/:id', getReservation,async (req, res)=>{
 });
 
 // Crear una reservación
-router.post('/new-reservation', async (req, res) => {
+router.post('/new-reservation', verifyToken, async (req, res) => {
     const { id_car, id_office, start_date, end_date, total } = req.body;
     try {
         const reservation = await Reservation.create({
@@ -78,7 +79,7 @@ router.post('/new-reservation', async (req, res) => {
 });
 
 // Actualizar una reservación
-router.put('/update-reservation/:id', getReservation, async (req, res) => {
+router.put('/update-reservation/:id', verifyToken, getReservation, async (req, res) => {
     const { id_car, id_office, start_date, end_date, total } = req.body;
     try {
         await Reservation.update({
@@ -100,7 +101,7 @@ router.put('/update-reservation/:id', getReservation, async (req, res) => {
 });
 
 // Eliminar una reservación
-router.delete('/delete-reservation/:id', getReservation, async (req, res) => {
+router.delete('/delete-reservation/:id', verifyToken, getReservation, async (req, res) => {
     try {
         await Reservation.destroy({
             where: {

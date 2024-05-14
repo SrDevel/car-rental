@@ -1,6 +1,7 @@
 const exrpess = require('express');
 const router = exrpess.Router();
 const Car = require('../models/cars.model');
+const { verifyToken } = require('../security/jwt.config');
 
 // Middleware para parsear el body de las peticiones
 router.use(exrpess.json());
@@ -59,7 +60,7 @@ router.get('/get-car/:id', getCar,async (req, res)=>{
 });
 
 // Crear un carro
-router.post('/create-car', async (req, res)=>{
+router.post('/create-car', verifyToken, async (req, res)=>{
     const newCar = req.body;
     if(!newCar.brand || !newCar.model || !newCar.year || !newCar.color || !newCar.price || !newCar.available || !newCar.transmission || !newCar.fuel || !newCar.doors || !newCar.passengers || !newCar.type ||  !newCar.luggage || !newCar.officeId){
         res.status(400).json({message: 'All fields are required'});
@@ -91,7 +92,7 @@ router.post('/create-car', async (req, res)=>{
 });
 
 // Actualizar un carro
-router.put('/get-car/:id', getCar, async (req, res)=>{
+router.put('/get-car/:id', verifyToken, getCar, async (req, res)=>{
     try {
         const car = res.car;
 
@@ -123,7 +124,7 @@ router.put('/get-car/:id', getCar, async (req, res)=>{
 });
 
 // Eliminar un carro
-router.delete('/delete-car/:id', getCar, async (req, res)=>{
+router.delete('/delete-car/:id', verifyToken, getCar, async (req, res)=>{
     try {
         const car = res.car;
         await car.destroy({
@@ -143,7 +144,7 @@ router.delete('/delete-car/:id', getCar, async (req, res)=>{
 
 });
 
-router.put('/update-car/:id', getCar, async (req, res)=>{
+router.put('/update-car/:id', verifyToken, getCar, async (req, res)=>{
     try {
         const car = res.car;
         car.brand = req.body.brand || car.brand;

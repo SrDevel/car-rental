@@ -3,9 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
     <title>Admin oficinas - RentEasy</title>
 </head>
 <body>
+    <style>
+
+        .office {
+            margin-top: 20px;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        
+        .office table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .office table thead {
+            background-color: #0f3973;
+            color: white;
+        }
+
+        .office table th,
+        .office table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .office table tbody tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .office table tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .office table td a {
+            margin: 0 5px;
+        }
+
+        .office table td a i {
+            font-size: 1.5rem;
+        }
+
+        .office table td a.btn-edit {
+            color: #0f3973;
+        }
+
+        .office table td a.btn-delete {
+            color: #ff0000;
+        }
+
+        .office table td a.btn-edit:hover, .office table td a.btn-delete:hover {
+            color: #000;
+        }
+
+        .office table td a.btn-edit:hover i, .office table td a.btn-delete:hover i {
+            color: #0f3973;
+        }
+
+        .office table td a.btn-edit:hover, .office table td a.btn-delete:hover {
+            color: #000;
+        }
+
+        .office table td a.btn-edit:hover i, .office table td a.btn-delete:hover i {
+            color: #0f3973;
+        }
+        
+    </style>
     <%-  include('../partials/sidebar') %>
         <section id="content">
             <%- include('../partials/admin-nav') %>
@@ -40,6 +108,7 @@
                                 <tr>
                                     <th>Nombre</th>
                                     <th>Dirección</th>
+                                    <th>Hora de apertura</th>
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
@@ -53,11 +122,13 @@
                                             <%= office.address %>
                                         </td>
                                         <td>
+                                            <%= office.opening_time %>
+                                        </td>
+                                        <td>
                                             <a href="/admin/update-office/<%= office.id %>" class="btn-edit">
                                                 <i class='bx bx-pencil'></i>
                                             </a>
-                                            <a href="/admin/delete-office/<%= office.id %>" class="btn-delete
-                                            ">
+                                            <a href="/admin/delete-office/<%= office.id %>" class="btn-delete">
                                                 <i class='bx bx-trash'></i>
                                             </a>
                                         </td>
@@ -68,7 +139,20 @@
                     </div>
                 </main>
         </section>
-        <%- include('../partials/footer') %>
-        <script src="/js/admin.js"></script>
+        <script src="../js/dashboard.js"></script>
+        <script>
+            // Le ponemos la clase active al link del sidebar que corresponde a la página actual
+            const liElements = document.querySelectorAll('.side-menu li');
+
+            // Quitamos la clase active de todos los elementos
+            liElements.forEach(li => {
+                li.classList.remove('active');
+                li.querySelector('a').classList.remove('active');
+            });
+
+            liElements[2].classList.add('active');
+            liElements[2].querySelector('a').classList.add('active');
+            
+        </script>
 </body>
 </html>

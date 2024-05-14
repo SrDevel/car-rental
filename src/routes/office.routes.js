@@ -3,6 +3,7 @@ const router = express.Router();
 const { json } = require('body-parser');
 const Office = require('../models/office.model');
 const { where } = require('sequelize');
+const { verifyToken } = require('../security/jwt.config');
 
 // Middleware para parsear el body de las peticiones
 router.use(express.json());
@@ -63,7 +64,7 @@ router.get('/get-office/:id', getOffice, (req, res) => {
 });
 
 // Crear una oficina
-router.post('/create-office', async (req, res) => {
+router.post('/create-office', verifyToken, async (req, res) => {
     const { name, address, phone, opening_time, latitude, longitude } = req.body;
     if (!name || !address || !phone || !opening_time || !latitude || !longitude){
         return res.status(400).json({
@@ -90,7 +91,7 @@ router.post('/create-office', async (req, res) => {
 });
 
 // Actualizar una oficina
-router.put('/update-office/:id', getOffice, async (req, res) => {
+router.put('/update-office/:id', verifyToken, getOffice, async (req, res) => {
     const { name, address, phone, email, latitud, longitud } = req.body;
     if (!name || !address || !phone || !email || !latitud || !longitud){
         return res.status(400).json({
@@ -123,7 +124,7 @@ router.put('/update-office/:id', getOffice, async (req, res) => {
 });
 
 // Eliminar una oficina
-router.delete('/delete-office/:id', getOffice, async (req, res) => {
+router.delete('/delete-office/:id', verifyToken, getOffice, async (req, res) => {
     try {
         await Office.destroy({
             where: {

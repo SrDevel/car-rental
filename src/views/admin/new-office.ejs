@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin nueva oficina - RentEasy</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+</head>
+<body>
+    <style>
+        .form {
+            display: flex;
+            flex-direction: row;
+            margin-top: 0 auto;
+            flex-wrap: nowrap;
+            justify-content: space-around;
+            align-items: flex-start;
+        }
+
+        .form-inputs {
+            display: flex;
+            flex-direction: column;
+            width: 40%;
+            margin-right: 20px;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+        }
+
+        .form-element {
+            margin-bottom: 10px;
+        }
+
+        .form-element label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-element input[type="text"],
+        .form-element input[type="time"],
+        .form-element input[type="submit"] {
+            width: 100%;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        #map {
+            width: 40%;
+            margin-top: 20px;
+        }
+
+        .ui-autocomplete {
+            z-index: 1000;
+        }
+
+        .ui-menu-item {
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .ui-menu-item:hover {
+            background-color: #f1f1f1;
+        }
+
+        .ui-menu-item a {
+            color: #333;
+            text-decoration: none;
+        }
+
+        .ui-menu-item a:hover {
+            color: #000;
+        }
+
+        .ui-menu-item a span {
+            font-weight: bold;
+        }
+
+        .ui-menu-item a span.type {
+            color: #999;
+        }
+
+        .ui-menu-item a span.type::after {
+            content: ' - ';
+        }
+
+        .ui-menu-item a span.type:last-child::after {
+            content: '';
+        }
+
+        .ui-menu-item a span.category {
+            color: #666;
+        }
+
+        .ui-menu-item a span.category::after {
+            content: ' - ';
+        }
+
+        .ui-menu-item a span.category:last-child::after {
+            content: '';
+        }
+
+        .ui-menu-item a span.city {
+            color: #333;
+        }
+
+        .ui-menu-item a span.city::after {
+            content: ', ';
+        }
+
+        .ui-menu-item a span.city:last-child::after {
+            content: '';
+        }
+
+        .ui-menu-item a span.country {
+            color: #333;
+        }
+
+        .ui-menu-item a span.country::after {
+            content: ', ';
+        }
+
+        .ui-menu-item a span.country:last-child::after {
+            content: '';
+        }
+
+        .ui-menu-item a span.postcode {
+            color: #333;
+        }
+
+    </style>
+
+    <div class="form">
+        <form action="/admin/new-office" method="POST" class="form-inputs">
+            <div class="form-element">
+                <label for="name">Nombre</label>
+                <input type="text" name="name" id="name" required>
+            </div>
+            <div class="form-element">
+                <label for="search">Dirección de la oficina:</label>
+                <input type="text" id="search" name="address" required autocomplete="off"> <!-- autocomplete="off" evita que el navegador muestre sugerencias de direcciones -->
+            </div>
+            <div class="form-element">
+                <label for="phone">Teléfono</label>
+                <input type="text" name="phone" id="phone" required>
+            </div>
+            <div class="form-element">
+                <label for="opening_time">Hora de apertura</label>
+                <input type="time" name="opening_time" id="opening_time" required>
+            </div>
+            <div class="form-element">
+                <input type="hidden" name="latitude" id="latitude" required>
+            </div>
+            <div class="form-element">
+                <input type="hidden" name="longitude" id="longitude" required>
+            </div>
+            <div class="form-element">
+                <input type="submit" value="Guardar oficina">
+            </div>
+        </form>
+
+        <div id="map" style="height: 400px;"></div>
+    </div>
+    
+    <script>
+        var map = L.map('map').setView([51.505, -0.09], 13);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+        }).addTo(map);
+        var marker = L.marker([51.505, -0.09]).addTo(map);
+
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                var latlng = L.latLng(position.coords.latitude, position.coords.longitude);
+                map.setView(latlng);
+                marker.setLatLng(latlng);
+                $('#latitude').val(position.coords.latitude);
+                console.log(position.coords.latitude);
+                $('#longitude').val(position.coords.longitude);
+                console.log(position.coords.longitude);
+            });
+        }
+
+        map.on('click', function (e) {
+            $('#latitude').val(e.latlng.lat);
+            $('#longitude').val(e.latlng.lng);
+
+            // Actualiza la posición del marcador
+            marker.setLatLng(e.latlng);
+
+            // Actualiza el campo de búsqueda
+            $.get('https://nominatim.openstreetmap.org/reverse', {
+                format: 'json',
+                lat: e.latlng.lat,
+                lon: e.latlng.lng
+            }, function (data) {
+                $('#search').val(data.display_name);
+            });
+        });
+
+        $("#search").autocomplete({
+            source: function (request, response) {
+                $.get('https://nominatim.openstreetmap.org/search', {
+                    format: 'json',
+                    q: request.term
+                }, function (data) {
+                    response($.map(data, function (item) {
+                        console.log(item);
+                        return {
+                            label: item.display_name,
+                            value: item.display_name,
+                            lat: item.lat,
+                            lon: item.lon
+                        };
+                    }));
+                });
+            },
+            select: function (event, ui) {
+                $('#latitude').val(ui.item.lat);
+                $('#longitude').val(ui.item.lon);
+
+                // Mueve el marcador a la ubicación seleccionada
+                var latlng = L.latLng(ui.item.lat, ui.item.lon);
+                console.log(latlng);
+                map.setView(latlng);
+                marker.setLatLng(latlng);
+            }
+        });
+    </script>
+</body>
+</html>

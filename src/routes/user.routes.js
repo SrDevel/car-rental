@@ -2,6 +2,7 @@ const exrpess = require('express');
 const router = exrpess.Router();
 const User = require('../models/user.model');
 const { encrypt, decrypt } = require('../security/password.operations');
+const { verifyToken } = require('../security/jwt.config');
 
 // Middleware para parsear el body de las peticiones
 router.use(exrpess.json());
@@ -62,7 +63,7 @@ router.get('/get-user/:id', getUser, async (req, res) => {
 });
 
 // Crear un usuario
-router.post('/create-user', async (req, res) => {
+router.post('/create-user', verifyToken, async (req, res) => {
     const { username, password } = req.body;
     if (!username || !password){
         return res.status(400).json({
@@ -85,7 +86,7 @@ router.post('/create-user', async (req, res) => {
 });
 
 // Actualizar un usuario
-router.put('/update-user/:id', getUser, async (req, res) => {
+router.put('/update-user/:id', verifyToken, getUser, async (req, res) => {
     const { username, password } = req.body;
     if (!username || !password){
         return res.status(400).json({
@@ -108,7 +109,7 @@ router.put('/update-user/:id', getUser, async (req, res) => {
 });
 
 // Eliminar un usuario
-router.delete('/delete-user/:id', getUser, async (req, res) => {
+router.delete('/delete-user/:id', verifyToken, getUser, async (req, res) => {
     try {
         await res.User.destroy();
         res.status(200).json({

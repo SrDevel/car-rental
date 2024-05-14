@@ -86,30 +86,18 @@
                 </main>
         </section>
         <script src="../js/dashboard.js"></script>
-
         <script>
-            // Le agregamos la clase active al enlace del sidebar
-            const link = document.querySelector('.side-menu a[href="/admin/vehicles"]');
-            link.classList.add('active');
+            // Le ponemos la clase active al link del sidebar que corresponde a la página actual
+            const liElements = document.querySelectorAll('.side-menu li');
 
-            // Notificaciones
+            // Quitamos la clase active de todos los elementos
+            liElements.forEach(li => {
+                li.classList.remove('active');
+                li.querySelector('a').classList.remove('active');
+            });
 
-            // Si en la url viene ?deleted=true, mostramos una notificación de éxito
-            const urlParams = new URLSearchParams(window.location.search);
-            const deleted = urlParams.get('deleted');
-            if (deleted) {
-                sendNotification("success", "Vehículo eliminado correctamente");
-            }
-
-            // Si en la url viene ?updated=false, mostramos una notificación de error
-            const updated = urlParams.get('deleted');
-            if (deleted === 'false') {
-                sendNotification("error", "No se pudo actualizar el vehículo");
-            }
-    
-            function sendNotification(type, text) {
-
-            }
+            liElements[1].classList.add('active');
+            liElements[1].querySelector('a').classList.add('active');
         </script>
 </body>
 

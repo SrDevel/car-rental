@@ -1,6 +1,7 @@
 const exrpess = require('express');
 const router = exrpess.Router();
 const Client = require('../models/client.model');
+const { verifyToken } = require('../security/jwt.config');
 
 // Middleware para parsear el body de las peticiones
 router.use(exrpess.json());
@@ -61,7 +62,7 @@ router.get('/get-client/:id', getClient, async (req, res) => {
 })
 
 // Crear un cliente
-router.post('/create-client', async (req, res) => {
+router.post('/create-client', verifyToken, async (req, res) => {
     const client = req.body;
     if (!client.name || !client.email || !client.phone){
         return res.status(400).json({
@@ -84,7 +85,7 @@ router.post('/create-client', async (req, res) => {
 })
 
 // Actualizar un cliente
-router.put('/update-client/:id', getClient, async (req, res) => {
+router.put('/update-client/:id', verifyToken, getClient, async (req, res) => {
     try {
         const client = res.client;
         client.name = req.body.name || client.name;
@@ -104,7 +105,7 @@ router.put('/update-client/:id', getClient, async (req, res) => {
 });
 
 // Eliminar un cliente
-router.delete('/delete-client/:id', getClient, async (req, res) =>{
+router.delete('/delete-client/:id', verifyToken, getClient, async (req, res) =>{
     try {
         const client = res.client;
         client.destroy({
