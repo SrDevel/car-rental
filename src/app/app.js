@@ -60,6 +60,8 @@ app.get('/dashboard', verifyToken, dashboardController.getDashboard);
 app.get('/logout', logoutController.logout);
 
 // Rutas para el administrador
+
+// Vehiculos
 app.get('/admin/vehicles', verifyToken, carController.adminVehicles);
 app.get('/admin/new-vehicle', verifyToken, carController.newVehicle);
 app.post('/admin/new-vehicle', verifyToken, fileUpload.single('image'), carController.createVehicle);
@@ -67,6 +69,8 @@ app.get('/admin/delete-vehicle/:id', verifyToken, carController.deleteVehicle);
 app.get('/admin/edit-vehicle/:id', verifyToken, carController.getVehicle);
 app.post('/admin/update-vehicle/:id', verifyToken, fileUpload.single('image'), carController.updateVehicle);
 
+// Oficinas
+app.get('/admin/offices', verifyToken, officeController.adminOffices);
 
 
 // Rutas de la API

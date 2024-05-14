@@ -14,7 +14,19 @@ const getOffices = async (req, res) => {
     }
 }
 
+// Funciones para el administrador
+const adminOffices = async(req, res) => {
+    const data = await getApiData('http://localhost:3000/api/v1/get-offices');
+    if (Array.isArray(data)) {
+        res.render('admin/offices', { offices: data });
+    } else {
+        console.log('Data no es un array');
+        res.render('admin/offices', { offices: data });
+    }
+}
+
 
 module.exports = {
-    getOffices
+    getOffices,
+    adminOffices
 }

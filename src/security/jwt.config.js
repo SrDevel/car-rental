@@ -13,7 +13,7 @@ const verifyToken = (req, res, next) => {
     console.log('Verifying token...');
     const token = req.cookies.token;
     if (!token){
-        return res.redirect('/login?message=Token no encontrado');
+        return res.redirect('/login?message=Parece que no has iniciado sesión, por favor hazlo para continuar');
     }
     try {
         const decoded = jwt.verify(token, jwtConfig.secret, {
@@ -22,7 +22,7 @@ const verifyToken = (req, res, next) => {
         req.user = decoded;
         next();
     } catch (err){
-        return res.redirect('/login?message=Token inválido');
+        return res.redirect('/login?message=Tu sesión ha expirado, por favor inicia sesión de nuevo');
     }
 }
 
