@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin usuarios - RentEasy</title>
+</head>
+<body>
+    <h1>Admin usuarios</h1>
+    <a href="/admin">Volver</a>
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Email</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% users.forEach(user => { %>
+                <tr>
+                    <td><%= user.name %></td>
+                    <td><%= user.email %></td>
+                    <td>
+                        <a href="/admin/users/<%= user.id %>/edit">Editar</a>
+                        <form action="/admin/users/<%= user.id %>/delete" method="POST">
+                            <button type="submit">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+            <% }); %>
+        </tbody>
+    </table>
+    <a href="/admin/users/create">Crear usuario</a>
+</body>
+</html>

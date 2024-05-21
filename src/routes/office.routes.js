@@ -3,7 +3,7 @@ const router = express.Router();
 const { json } = require('body-parser');
 const Office = require('../models/office.model');
 const { where } = require('sequelize');
-const { verifyToken } = require('../security/jwt.config');
+const { validateToken } = require('../security/jwt.config');
 
 // Middleware para parsear el body de las peticiones
 router.use(express.json());
@@ -11,7 +11,7 @@ router.use(express.json());
 // Middleware para obtener oficina
 const getOffice = async (req, res, next) => {
     let office;
-    const { id } = req.office;
+    const { id } = req.params;
 
     if (!id){
         return res.status(400).json({
@@ -64,7 +64,7 @@ router.get('/get-office/:id', getOffice, (req, res) => {
 });
 
 // Crear una oficina
-router.post('/create-office', verifyToken, async (req, res) => {
+router.post('/create-office', async (req, res) => {
     const { name, address, phone, opening_time, latitude, longitude } = req.body;
     if (!name || !address || !phone || !opening_time || !latitude || !longitude){
         return res.status(400).json({
@@ -91,44 +91,30 @@ router.post('/create-office', verifyToken, async (req, res) => {
 });
 
 // Actualizar una oficina
-router.put('/update-office/:id', verifyToken, getOffice, async (req, res) => {
-    const { name, address, phone, email, latitud, longitud } = req.body;
-    if (!name || !address || !phone || !email || !latitud || !longitud){
-        return res.status(400).json({
-            message: 'Missing fields'
-        });
-    }
-
+router.put('/update-office/:id', getOffice, async (req, res) => {
     try {
-        await Office.update({
-            name,
-            address,
-            phone,
-            email,
-            latitud,
-            longitud
-        }, {
-            where: {
-                id: req.office.id
-            }
-        });
-        res.status(200).json({
-            message: 'Office updated successfully'
-        });
+        const office = res.office;
+        office.name = req.body.name || office.name;
+        office.address = req.body.address || office.address;
+        office.phone = req.body.phone || office.phone;
+        office.opening_time = req.body.opening_time || office.opening_time;
+        office.latitude = req.body.latitude || office.latitude;
+        office.longitude = req.body.longitude || office.longitude;
+
+        await office.save();
+        res.status(200).json(office);
     } catch (error) {
-        res.status(500).json({
-            message: 'Error updating office'
-        });
-        console.error(error);
+        
     }
 });
 
 // Eliminar una oficina
-router.delete('/delete-office/:id', verifyToken, getOffice, async (req, res) => {
+router.delete('/delete-office/:id', getOffice, async (req, res) => {
     try {
-        await Office.destroy({
+        const office = res.office;
+        await office.destroy({
             where: {
-                id: req.office.id
+                id: office.id
             }
         });
         res.status(200).json({

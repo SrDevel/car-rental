@@ -10,7 +10,6 @@ const jwtConfig = {
 }
 
 const verifyToken = (req, res, next) => {
-    console.log('Verifying token...');
     const token = req.cookies.token;
     if (!token){
         return res.redirect('/login?message=Parece que no has iniciado sesión, por favor hazlo para continuar');
@@ -26,12 +25,37 @@ const verifyToken = (req, res, next) => {
     }
 }
 
+const getToken = (req) => {
+    return req.cookies.token;
+}
+
+// Creamos un middleware para validar el token para los endpoints
+const validateToken = (req, res, next) => {
+    const token = req.cookies.token;
+    if (!token){
+        return res.status(401).json({
+            message: 'Necesitas estar logueado para acceder a este recurso'
+        });
+    }
+    try {
+        const decoded = jwt.verify(token, jwtConfig.secret, {
+            algorithms: jwtConfig.algorithms
+        });
+        req.user = decoded;
+        next();
+    } catch (err){
+        return res.status(401).json({
+            message: 'El token no es válido'
+        });
+    }
+}
+
 const generateToken = (user) => {
     const token = jwt.sign(user, jwtConfig.secret, {
         algorithm: jwtConfig.algorithms[0],
         expiresIn: jwtConfig.expiresIn
     });
-    console.log('Token generated:', token);
+    console.log('Token generado', token);
     return token;
 }
 
@@ -39,8 +63,17 @@ const destroyToken = (res) => {
     res.clearCookie('token');
 }
 
+const getDataFromToken = (token) => {
+    return jwt.verify(token, jwtConfig.secret, {
+        algorithms: jwtConfig.algorithms
+    });
+}
+
 module.exports = {
     generateToken,
     verifyToken,
-    destroyToken
+    destroyToken,
+    validateToken,
+    getDataFromToken,
+    getToken
 }

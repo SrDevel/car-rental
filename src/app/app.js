@@ -73,6 +73,10 @@ app.post('/admin/update-vehicle/:id', verifyToken, fileUpload.single('image'), c
 app.get('/admin/offices', verifyToken, officeController.adminOffices);
 app.get('/admin/new-office', verifyToken, officeController.newOffice);
 app.post('/admin/new-office', verifyToken, officeController.createOffice);
+app.get('/admin/delete-office/:id', verifyToken, officeController.deleteOffice);
+app.get('/admin/update-office/:id', verifyToken, officeController.editOffice);
+app.post('/admin/edit-office/:id', verifyToken, officeController.updateOffice);
+
 
 
 // Rutas de la API

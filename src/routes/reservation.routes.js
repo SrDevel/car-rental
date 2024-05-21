@@ -61,7 +61,7 @@ router.get('/get-reservation/:id', getReservation,async (req, res)=>{
 });
 
 // Crear una reservación
-router.post('/new-reservation', verifyToken, async (req, res) => {
+router.post('/new-reservation',  async (req, res) => {
     const { id_car, id_office, start_date, end_date, total } = req.body;
     try {
         const reservation = await Reservation.create({
@@ -79,7 +79,7 @@ router.post('/new-reservation', verifyToken, async (req, res) => {
 });
 
 // Actualizar una reservación
-router.put('/update-reservation/:id', verifyToken, getReservation, async (req, res) => {
+router.put('/update-reservation/:id', getReservation, async (req, res) => {
     const { id_car, id_office, start_date, end_date, total } = req.body;
     try {
         await Reservation.update({
@@ -101,7 +101,7 @@ router.put('/update-reservation/:id', verifyToken, getReservation, async (req, r
 });
 
 // Eliminar una reservación
-router.delete('/delete-reservation/:id', verifyToken, getReservation, async (req, res) => {
+router.delete('/delete-reservation/:id',  getReservation, async (req, res) => {
     try {
         await Reservation.destroy({
             where: {

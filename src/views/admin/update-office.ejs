@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin nueva oficina - RentEasy</title>
+    <title>Editando Oficina: <%= office.name %> - RentEasy</title>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
@@ -13,7 +13,6 @@
 </head>
 <body>
     <style>
-
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -27,29 +26,39 @@
             text-align: center;
         }
 
-        .form {
+        .form-container {
             display: flex;
             flex-direction: row;
-            flex-wrap: nowrap;
-            justify-content: space-around;
-            align-items: flex-start;
-            margin: 3rem 0;
+            justify-content: space-evenly;
+            align-items: center;
         }
 
-        .form-inputs {
+        .form {
+            margin: 1rem 1rem 0 1rem;
             display: flex;
             flex-direction: column;
-            width: 45%;
+            width: 50%;
             border-radius: 0.25rem;
             padding: 1rem;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-            flex-wrap: nowrap;
+        }
+
+        .form-input {
+            display: flex;
+            flex-direction: column;
+            width: 95%;
+            border-radius: 0.25rem;
+            padding: 1rem;
         }
 
         .form-element {
             display: flex;
             flex-direction: column;
-            margin: 0.5rem 0.5rem 1rem 0.5rem;
+        }
+
+        /* Quitamos los elementos deshabilitados */
+        .form-element.hide {
+            display: none;
         }
 
         .form-element label {
@@ -59,154 +68,66 @@
 
         .form-element input {
             padding: 0.5rem;
-            border: 1px solid #ccc;
             border-radius: 0.25rem;
-            width: 100%;
+            border: 1px solid #ccc;
         }
 
         .form-element input[type="submit"] {
             background-color: #007bff;
             color: white;
             border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 0.25rem;
             cursor: pointer;
         }
 
+        .form-element input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
         #map {
-            width: 45%;
+            width: 60%;
+            height: 470px;
+            margin: 1rem 1rem 0 0;
             border-radius: 0.25rem;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
         }
 
-        .ui-autocomplete {
-            z-index: 1000;
-        }
-
-        .ui-menu-item {
-            padding: 0.5rem;
-            background-color: white;
-            border-bottom: 1px solid #ccc;
-        }
-
-        .ui-menu-item:hover {
-            background-color: #f9f9f9;
-        }
-
-        .ui-menu-item a {
-            color: black;
-            text-decoration: none;
-        }
-
-        .ui-menu-item a:hover {
-            color: black;
-        }
-
-        .ui-menu-item a.ui-state-focus {
-            background-color: #f9f9f9;
-        }
-
-        .ui-menu-item a.ui-state-active {
-            background-color: #f9f9f9;
-        }
-
-        .ui-helper-hidden-accessible {
-            display: none;
-        }
-
-        .ui-widget-content {
-            border: 1px solid #ccc;
-        }
-
-        .ui-widget-content a {
-            color: black;
-        }
-
-        .ui-widget-content a:hover {
-            color: black;
-        }
-
-        .ui-widget-content a.ui-state-focus {
-            background-color: #f9f9f9;
-        }
-
-        .ui-widget-content a.ui-state-active {
-            background-color: #f9f9f9;
-        }
-
-        .back {
-            display: block;
-            margin-top: 1rem;
-            text-align: center;
-            text-decoration: none;
-            color: white;
-            background-color: #4291e7;
-            margin: 20px 45%;
-            padding: 0.5rem 1rem;
-            border-radius: 0.25rem;
-            transition: background-color 0.3s;
-        }
-
-        .back:hover {
-            background-color: #007bff;
-            color: white;
-        }
-
-        .message {
-            text-align: center;
-            margin: 1rem 0;
-        }
-
-        .error {
-            color: red;
-        }
-
     </style>
-
     <header>
-        <h1>Nueva oficina</h1>
+        <h1>Editando Oficina: <%= office.name %></h1>
     </header>
 
-    <div class="message">
-        <% if (created === false) { %>
-            <p class="error">No se ha podido crear la oficina</p>
-        <% } %>
-    </div>
-
-    <div class="form">
-        <form action="/admin/new-office" method="POST" class="form-inputs">
-            <div class="form-element">
+    <form action="/admin/edit-office/<%= office.id %>" method="post" class="form-container">
+        <div class="form">
+            <div class="form-input form-element">
                 <label for="name">Nombre</label>
-                <input type="text" name="name" id="name" required>
+                <input type="text" name="name" id="name" value="<%= office.name %>" required>
             </div>
-            <div class="form-element">
-                <label for="search">Dirección de la oficina:</label>
-                <input type="text" id="search" name="address" required autocomplete="off">
+            <div class="form-input form-element">
+                <label for="address">Dirección</label>
+                <input type="text" name="address" id="address" value="<%= office.address %>" required>
             </div>
-            <div class="form-element">
+            <div class="form-input form-element">
                 <label for="phone">Teléfono</label>
-                <input type="text" name="phone" id="phone" required>
+                <input type="text" name="phone" id="phone" value="<%= office.phone %>" required>
             </div>
-            <div class="form-element">
+            <div class="form-input form-element">
                 <label for="opening_time">Hora de apertura</label>
-                <input type="time" name="opening_time" id="opening_time" required>
+                <input type="time" name="opening_time" id="opening_time" value="<%= office.opening_time %>" required>
             </div>
-            <div class="form-element">
-                <input type="hidden" name="latitude" id="latitude" required>
+            <div class="form-input form-element hide">
+                <input type="hidden" name="latitude" id="latitude" value="<%= office.latitude %>" required>
             </div>
-            <div class="form-element">
-                <input type="hidden" name="longitude" id="longitude" required>
+            <div class="form-input form-element hide">
+                <input type="hidden" name="longitude" id="longitude" value="<%= office.longitude %>" required>
             </div>
-            <div class="form-element">
+            <div class="form-input form-element">
                 <input type="submit" value="Guardar oficina">
             </div>
-        </form>
-
+        </div>
         <div id="map" style="height: 470px;"></div>
-    </div>
-
-    <a class="back" href="/admin/offices">Volver</a>
+    </form>
     
+    <a href="/admin/offices">Volver</a>
     <script>
         var map = L.map('map').setView([51.505, -0.09], 13);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -250,11 +171,11 @@
                 // Establece el nombre de la ubicación en el campo respectivo
                 $('#name').val(shortAddress);
 
-                $('#search').val(data.display_name);
+                $('#address').val(data.display_name);
             });
         });
 
-        $("#search").autocomplete({
+        $("#address").autocomplete({
             source: function (request, response) {
                 $.get('https://nominatim.openstreetmap.org/search', {
                     format: 'json',

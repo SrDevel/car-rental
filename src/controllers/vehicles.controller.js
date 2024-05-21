@@ -105,7 +105,6 @@ const getVehicle = async (req, res) => {
     }
 }
 
-
 const updateVehicle = async (req, res) => {
     try {
         const id = req.params.id;
@@ -120,7 +119,6 @@ const updateVehicle = async (req, res) => {
         return res.status(500).send("Error interno del servidor.");
     }
 }
-
 
 module.exports = {
     getVehicles,
