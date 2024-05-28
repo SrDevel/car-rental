@@ -89,6 +89,7 @@ body {
     text-align: center;
     background-color: #f8f9fa;
     transition: all 0.3s ease;
+    min-width: auto !important;
 }
 
 .card:hover {

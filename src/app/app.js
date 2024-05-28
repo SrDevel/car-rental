@@ -31,6 +31,7 @@ const dashboardController = require('../controllers/dashboard.controller');
 const officeController = require('../controllers/offices.controller');
 const indexController = require('../controllers/index.controller');
 const logoutController = require('../controllers/logout.controller');
+const userController = require('../controllers/users.controller');
 
 // Inicializamos la app de express
 const app = express();
@@ -46,6 +47,7 @@ app.set('views', path.join(__dirname, '../views'));
 app.use(morgan('dev'));
 app.use(express.static('public'))
 app.use('/uploads', express.static('uploads'));
+
 // Para poder leer los datos de los formularios, es necesario usar estos middlewares de express para parsear los datos de las peticiones
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -76,6 +78,9 @@ app.post('/admin/new-office', verifyToken, officeController.createOffice);
 app.get('/admin/delete-office/:id', verifyToken, officeController.deleteOffice);
 app.get('/admin/update-office/:id', verifyToken, officeController.editOffice);
 app.post('/admin/edit-office/:id', verifyToken, officeController.updateOffice);
+
+// Usuarios
+app.get('/admin/users', verifyToken, userController.adminUsers);
 
 
 

@@ -4,33 +4,230 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin usuarios - RentEasy</title>
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
 </head>
 <body>
-    <h1>Admin usuarios</h1>
-    <a href="/admin">Volver</a>
-    <table>
-        <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Email</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            <% users.forEach(user => { %>
-                <tr>
-                    <td><%= user.name %></td>
-                    <td><%= user.email %></td>
-                    <td>
-                        <a href="/admin/users/<%= user.id %>/edit">Editar</a>
-                        <form action="/admin/users/<%= user.id %>/delete" method="POST">
-                            <button type="submit">Eliminar</button>
-                        </form>
-                    </td>
-                </tr>
-            <% }); %>
-        </tbody>
-    </table>
-    <a href="/admin/users/create">Crear usuario</a>
+
+    <style>
+        /* Reutilizamos estilos de dashboard.css */
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #f1f4f6;
+}
+
+.head-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.head-title h1 {
+    font-size: 24px;
+    font-weight: 500;
+    color: #333;
+}
+
+.breadcrumb {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    color: #333;
+}
+
+.breadcrumb li {
+    list-style: none;
+    display: inline;
+}
+
+.breadcrumb li i {
+    margin: 0 10px;
+}
+
+.breadcrumb li a {
+    color: #333;
+    text-decoration: none;
+}
+
+.breadcrumb li a.active {
+    color: #007bff;
+}
+
+.btn-download {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.btn-download i {
+    margin-right: 10px;
+}
+
+.table-data {
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table thead {
+    background-color: #007bff;
+    color: #fff;
+}
+
+table th,
+table td {
+    padding: 15px;
+    text-align: left;
+}
+
+table th {
+    font-weight: 500;
+}
+
+table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+table tbody tr td img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+table tbody tr td a {
+    display: inline-block;
+    margin-right: 10px;
+    padding: 5px;
+    color: #333;
+    text-decoration: none;
+}
+
+table tbody tr td a i {
+    font-size: 18px;
+}
+
+table tbody tr td a.btn-edit {
+    color: #007bff;
+}
+
+table tbody tr td a.btn-delete {
+    color: #dc3545;
+}
+
+table tbody tr td a.btn-delete:hover {
+    color: #a71d2a;
+}
+
+table tbody tr td a.btn-edit:hover {
+    color: #0056b3;
+}
+
+main {
+    padding: 20px;
+}
+
+.active {
+    color: #007bff;
+}
+
+.active i {
+    color: #007bff;
+}
+
+.active span {
+    color: #007bff;
+}
+
+        
+    </style>
+
+    <%- include('../partials/sidebar') %>
+        <section id="content">
+            <%- include('../partials/admin-nav') %>
+            <main>
+                <div class="head-title">
+                    <div class="left">
+                        <h1>Usuarios</h1>
+                        <ul class="breadcrumb">
+                            <li>
+                                <a href="#">Panel de Control</a>
+                            </li>
+                            <li><i class='bx bx-chevron-right'></i></li>
+                            <li>
+                                <a class="active" href="#">Usuarios/a>
+                            </li>
+                        </ul>
+                    </div>
+                    <a href="/admin/new-vehicle" class="btn-download">
+                        <i class='bx bxs-plus-circle'></i>
+                        <span class="text">Agregar Usuario</span>
+                    </a>
+                </div>
+
+                <div class="table-data">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Nombre</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% users.forEach(user=> { %>
+                                <tr>
+                                    <td>
+                                        <%= user.id %>
+                                    </td>
+                                    <td>
+                                        <%= user.username %>
+                                    </td>
+                                    <td>
+                                        <a href="/admin/edit-user/<%= user.id %>" class="btn-edit">
+                                            <i class='bx bxs-edit'></i>
+                                        </a>
+                                        <a href="/admin/delete-user/<%= user.id %>" class="btn-delete">
+                                            <i class='bx bxs-trash'></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            </main>
+        </section>
+        <script src="../js/dashboard.js"></script>
+        <script>
+            // Le ponemos la clase active al link del sidebar que corresponde a la página actual
+            const liElements = document.querySelectorAll('.side-menu li');
+
+            // Quitamos la clase active de todos los elementos
+            liElements.forEach(li => {
+                li.classList.remove('active');
+                li.querySelector('a').classList.remove('active');
+            });
+
+            liElements[4].classList.add('active');
+            liElements[4].querySelector('a').classList.add('active');
+        </script>
 </body>
 </html>
