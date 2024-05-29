@@ -44,9 +44,15 @@ body {
     padding: 10px;
     margin-left: 10px;
     /* Lo mantenemos fijo */
-    position: -webkit-sticky;
     position: sticky;
     top: 0;
+    z-index: 1;
+    padding-right: 3rem;
+    transition: all 0.3s ease;
+}
+
+.row {
+    padding-right: 3.5rem !important;
 }
 
 .apartado-formulario {

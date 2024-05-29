@@ -34,24 +34,32 @@
 
                 <ul class="box-info">
                     <li>
-                        <i class='bx bxs-calendar-check'></i>
-                        <span class="text">
-                            <h3>1020</h3>
-                            <p>Nuevos Pedidos</p>
-                        </span>
-                    </li>
-                    <li>
-                        <i class='bx bxs-group'></i>
-                        <span class="text">
-                            <h3>2834</h3>
-                            <p>Visitantes</p>
-                        </span>
-                    </li>
-                    <li>
                         <i class='bx bxs-dollar-circle'></i>
                         <span class="text">
-                            <h3>$2543</h3>
-                            <p>Ventas Totales</p>
+                            <h3>
+                                <% if (reservations) { %>
+                                    <%= reservations.length %> <% } else { %> 0 <% } %>
+                            </h3>
+                            <p>Total de reservaciones</p>
+                        </span>
+                    </li>
+                    <li>
+                        <i class='bx bxs-car'></i>
+                        <span class="text">
+                            <h3>
+                                <% if (vehicles) { %>
+                                    <%= vehicles.length %> <% } else { %> 0 <% } %>
+                            <p>Total de Vehiculos</p>
+                        </span>
+                    </li>
+                    <li>
+                        <i class='bx bxs-location-plus'></i>
+                        <span class="text">
+                            <h3>
+                                <% if (offices) { %>
+                                    <%= offices.length %> <% } else { %> 0 <% } %>
+                            </h3>
+                            <p>Total de oficinas</p>
                         </span>
                     </li>
                 </ul>

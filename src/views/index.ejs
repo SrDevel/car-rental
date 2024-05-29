@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
   <meta charset="UTF-8">
@@ -37,12 +37,19 @@
             <div class="form-floating">
               <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
                 <option selected>Buscar oficina, aeropuerto, código postal</option>
-                <% array.forEach(function(offices) { %>
-                  <option value="<%= offices.id %>">
-                    <%= offices.name %>
-                  </option>
+                <% if (array) { %>
+                  <% array.forEach(function(offices) { %>
+                    <option value="<%= offices.id %>">
+                      <%= offices.name %>
+                    </option>
                   <% }) %>
+                <% } else { %>
+                  <option value="1">Oficina 1</option>
+                  <option value="2">Oficina 2</option>
+                  <option value="3">Oficina 3</option>
+                <% } %>
               </select>
+              <label for="floatingSelect">OFICINA DE DEVOLUCION</label>
               <label for="floatingSelect">OFICINA DE RECOGIDA</label>
             </div>
           </div>
@@ -124,7 +131,25 @@
     crossorigin="anonymous"></script>
 
   <script>
+    // Si está seleccionado el checkbox de devolver a una oficina diferente se muestra el select de oficinas
+    const checkbox = document.getElementById('flexCheckDefault');
+    const select = document.getElementById('floatingSelect');
+    checkbox.addEventListener('change', () => {
+      if (checkbox.checked) {
+        select.style.display = 'block';
+      } else {
+        select.style.display = 'none';
+      }
+    });
 
+    // Si se selecciona una oficina diferente se muestra el select de oficinas
+    select.addEventListener('change', () => {
+      if (select.value !== '1') {
+        select.style.display = 'block';
+      } else {
+        select.style.display = 'none';
+      }
+    });
   </script>
 </body>
 

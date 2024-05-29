@@ -82,13 +82,15 @@ app.post('/admin/edit-office/:id', verifyToken, officeController.updateOffice);
 // Usuarios
 app.get('/admin/users', verifyToken, userController.adminUsers);
 
-
-
 // Rutas de la API
 app.use('/api/v1', carRouter);
 app.use('/api/v1', clientRouter);
 app.use('/api/v1', reservationRouter);
 app.use('/api/v1', officeRouter);
 app.use('/api/v1', userRouter);
+
+app.use(function (req, res, next) {
+    res.status(404).render('404', { title: 'Página no encontrada'});
+});
 
 module.exports = app;

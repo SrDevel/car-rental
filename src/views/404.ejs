@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><% title %></title>
+</head>
+<body>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 100px;
+        }
+        h1 {
+            font-size: 3em;
+            color: #333;
+        }
+        .texto {
+            font-size: 1.5em;
+            color: #666;
+        }
+
+        a {
+            font-size: 1.2em;
+            background: #007bff;
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            transition: all 0.3s;
+        }
+
+        /* Agregamos una animación de una linea que recorre los bordes del botón */
+        a:hover {
+            background: #0056b3;
+            color: #fff;
+        }
+
+        a:active {
+            background: #0056b3;
+            color: #fff;
+        }
+
+        a:visited {
+            color: #007bff;
+            color: #fff;
+        }
+
+        a:link {
+            color: #007bff;
+            color: #fff;
+        }
+
+        a:focus {
+            outline: none;
+            color: #fff;
+        }
+
+    </style>
+    <h1>404 Not Found</h1>
+    <p class="texto">Lo sentimos, la página que buscas no existe.</p>
+    <a href="/">Volver al inicio</a>
+    <%- include('partials/footer') %>
+</body>
+</html>
